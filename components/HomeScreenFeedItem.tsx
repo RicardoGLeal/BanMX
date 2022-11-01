@@ -5,6 +5,8 @@ import palette from '../palette';
 
 export type Item = {
     title: string,
+    text: string, 
+    uri: string,
 }
 
 export default function Item({ title }: {title: string}){
@@ -17,13 +19,22 @@ export default function Item({ title }: {title: string}){
 
 const styles = StyleSheet.create({
     item: {
-      backgroundColor: '#f9c2ff',
-      height: 200,
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+        backgroundColor: '#EAEAEA',
+        height: 144,
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 4,
+        borderRadius: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     title: {
-      fontSize: 32,
+      fontSize: 22,
     },
 });

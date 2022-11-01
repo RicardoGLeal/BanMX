@@ -37,10 +37,10 @@ export default function HomeScreen({ navigation }) {
                 paddingRight: '10%'
               }
             }>
-                <Text style={styles.title}>Hola Carlo </Text>
+                <Text style={styles.title}>Hola, Carlo </Text>
                 <InformacionIconButton screen={"Profile"}/>
             </View>
-            <View>
+            <View style={styles.storiesContainer}>
                 <FlatList
                     data={DATA}
                     renderItem={renderItem}
@@ -56,6 +56,20 @@ const styles = StyleSheet.create({
       flex: 1,
       marginTop: StatusBar.currentHeight || 0,
       backgroundColor: palette.background
+    },
+    storiesContainer: {
+      backgroundColor: '#ffffff',
+      height: '100%',
+      padding: 20,
+      borderRadius: 18,
+      margin: 10,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     item: {
       backgroundColor: '#f9c2ff',
