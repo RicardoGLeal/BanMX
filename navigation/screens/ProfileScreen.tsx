@@ -13,6 +13,9 @@ import StatProfile from "../../components/StatProfile";
 import ProfileMap from "../../components/ProfileMap";
 
 export default function ProfileScreen({ navigation }) {
+  const [isEnabled, setIsEnabled] = React.useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
@@ -27,25 +30,30 @@ export default function ProfileScreen({ navigation }) {
       </View>
 
       <View style={styles.main_container}>
-        <Text> Carlo Lujan </Text>
+        <Text style={styles.title_style}> Carlo Lujan </Text>
         <Text> @carlolj </Text>
-        <View>
+        <View style={styles.switch_container}>
           <Text> Cuenta publica </Text>
-          <Switch />
+          <Switch
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+            trackColor={{ false: "#767577", true: "#2CC9AC" }}
+            thumbColor={isEnabled ? "#229C86" : "#f4f3f4"}
+          />
         </View>
 
         <View>
-          <Text> Donaciones directas </Text>
+          <Text style={styles.section_title}> Donaciones directas </Text>
           <StatProfile />
         </View>
 
         <View>
-          <Text> Numero de referidos </Text>
+          <Text style={styles.section_title}> Numero de referidos </Text>
           <StatProfile />
         </View>
 
         <View>
-          <Text> Puntos Totales </Text>
+          <Text style={styles.section_title}> Puntos Totales </Text>
           <StatProfile />
         </View>
 
@@ -55,53 +63,6 @@ export default function ProfileScreen({ navigation }) {
     </View>
   );
 }
-
-/*
-      <Text
-        onPress={() => navigation.navigate("Home")}
-        style={{ fontSize: 26, fontWeight: "bold" }}
-      >
-        Profile Screen
-      </Text>
-*/
-
-/*
-    <View style={styles.container}>
-      <View style={styles.top_container}>
-        <Image
-          source={require("../../assets/icon-little.png")}
-          style={styles.tiny_logo}
-        />
-        <Image
-          source={require("../../assets/akar-icons_link-chain.png")}
-          style={styles.link_button}
-        />
-      </View>
-    </View>
-*/
-
-/*
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 40,
-      }}
-    >
-      <View style={{ width: "40%" }}>
-        <Button title="BUY" />
-      </View>
-      <View style={{ width: "40%" }}>
-        <Image
-          source={require("../../assets/icon-little.png")}
-          style={styles.tiny_logo}
-        />
-      </View>
-    </View>
-*/
 
 const styles = StyleSheet.create({
   container: {
@@ -137,5 +98,21 @@ const styles = StyleSheet.create({
   main_container: {
     display: "flex",
     alignItems: "center",
+  },
+  title_style: {
+    color: palette.blueText,
+    fontSize: 24,
+    fontWeight: "800",
+    lineHeight: 36,
+  },
+  switch_container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  section_title: {
+    fontSize: 20,
+    fontWeight: "700",
+    lineHeight: 24,
   },
 });
