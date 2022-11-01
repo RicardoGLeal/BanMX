@@ -6,8 +6,11 @@ import {
   SafeAreaView,
   Image,
   Button,
+  Switch,
 } from "react-native";
 import palette from "../../palette";
+import StatProfile from "../../components/StatProfile";
+import ProfileMap from "../../components/ProfileMap";
 
 export default function ProfileScreen({ navigation }) {
   return (
@@ -21,6 +24,33 @@ export default function ProfileScreen({ navigation }) {
             <Image source={require("../../assets/akar-icons_link-chain.png")} />
           </View>
         </View>
+      </View>
+
+      <View style={styles.main_container}>
+        <Text> Carlo Lujan </Text>
+        <Text> @carlolj </Text>
+        <View>
+          <Text> Cuenta publica </Text>
+          <Switch />
+        </View>
+
+        <View>
+          <Text> Donaciones directas </Text>
+          <StatProfile />
+        </View>
+
+        <View>
+          <Text> Numero de referidos </Text>
+          <StatProfile />
+        </View>
+
+        <View>
+          <Text> Puntos Totales </Text>
+          <StatProfile />
+        </View>
+
+        <ProfileMap />
+        <Button title="Cerrar sesión" />
       </View>
     </View>
   );
@@ -103,5 +133,9 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  main_container: {
+    display: "flex",
+    alignItems: "center",
   },
 });
