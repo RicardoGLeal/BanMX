@@ -114,5 +114,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     lineHeight: 24,
+    marginTop: 10,
   },
 });
