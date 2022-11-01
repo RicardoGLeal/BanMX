@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { Platform, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
 
 // Screens
 import HomeScreen from './screens/HomeScreen';
@@ -43,7 +46,7 @@ function MainContainer() {
           activeTintColor: 'tomato',
           inactiveTintColor: 'grey',
           labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 90}
+          style: [{padding:10}, styles.height]
         }}>
 
         <Tab.Screen name={homeName} component={HomeScreen} />
@@ -54,5 +57,9 @@ function MainContainer() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  height: Platform.OS === 'ios' ? 200 : 100
+});
 
 export default MainContainer;
