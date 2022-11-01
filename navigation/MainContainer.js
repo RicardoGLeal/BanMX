@@ -32,7 +32,7 @@ function MainContainer() {
             } else if (rn === detailsName) {
               iconName = focused ? "list" : "list-outline";
             } else if (rn === profileName) {
-              iconName = focused ? "settings" : "settings-outline";
+              iconName = focused ? "person" : "person-outline";
             }
 
             // You can return any component that you like here!
