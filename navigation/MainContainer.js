@@ -10,6 +10,8 @@ import DetailsScreen from "./screens/DetailsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
+import VolunteerFormScreen from "./screens/VolunteerFormScreen";
+
 //Screen namesrr
 const homeName = "Home";
 const detailsName = "Details";
@@ -53,7 +55,7 @@ function MainContainer() {
       >
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={profileName} component={ProfileScreen} />
+        <Tab.Screen name={profileName} component={VolunteerFormScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
