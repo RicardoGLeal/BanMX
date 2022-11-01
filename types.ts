@@ -1,0 +1,18 @@
+export type MarginPaddingPropTypes = {
+    width?: number | string,
+    height?: number | string,
+    margin?: number | string,
+    marginVertical?: number | string,
+    marginHorizontal?: number | string,
+    marginTop?: number | string,
+    marginBottom?: number | string,
+    marginStart?: number | string,
+    marginEnd?: number | string,
+    padding?: number | string,
+    paddingVertical?: number | string,
+    paddingHorizontal?: number | string,
+    paddingTop?: number | string,
+    paddingBottom?: number | string,
+    paddingStart?: number | string,
+    paddingEnd?: number | string,
+};
