@@ -48,6 +48,17 @@ export default function HomeScreen({ navigation }) {
                 />
             </View>
         </SafeAreaView>
+import BanInput from '../../components/BanInputText';
+export default function HomeScreen({ navigation }) {
+    const [mailInputValue, setMailInputValue] = React.useState('');
+
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.background }}>
+            <BanInput placeholder='Correo' onChange={setMailInputValue} value={mailInputValue} containerStyle={{ width: 325, height: 50 }} type='email-address'></BanInput>
+            <Text
+                onPress={() => alert('This is the "Home" screen.')}
+                style={{ fontSize: 26, fontWeight: 'bold' }}>Home Screen</Text>
+        </View>
     );
 }
 
