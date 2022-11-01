@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, Text, FlatList, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, FlatList, SafeAreaView, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native';
 import Item from '../../components/HomeScreenFeedItem';
 import {Item as ItemType} from '../../components/HomeScreenFeedItem';
+import InformacionIconButton from '../../components/InformacionIconButton';
 import palette from '../../palette';
 
 const DATA = [
@@ -26,8 +27,20 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={
+              { 
+                paddingLeft: '10%', 
+                alignItems: 'center',
+                justifyContent: 'space-between', 
+                alignContent: 'space-between', 
+                flexDirection: 'row', 
+                paddingRight: '10%'
+              }
+            }>
+                <Text style={styles.title}>Hola Carlo </Text>
+                <InformacionIconButton screen={"Profile"}/>
+            </View>
             <View>
-                <Text style={{ fontSize: 20 }}>Hola Carlo, Come polla rick</Text>
                 <FlatList
                     data={DATA}
                     renderItem={renderItem}
@@ -52,6 +65,16 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 32,
+      fontWeight: 'bold',
+      color: '#3A3A3A'
+    },
+    tinyLogo: {
+      width: 50,
+      height: 50,
+    },
+    logo: {
+      width: 66,
+      height: 58,
     },
 });
 
