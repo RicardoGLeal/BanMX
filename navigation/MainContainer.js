@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { Platform } from 'react-native-web';
 
 //Screen names
 const homeName = "Home";
@@ -43,10 +44,13 @@ function MainContainer() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'grey',
+          activeTintColor: '#FFE500',
+          inactiveTintColor: '#FFF2CB',
+
           labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: [styles.height]
+          style: {backgroundColor: '#F12749', padding: 10, height: Platform.OS === "ios" ? 90 : 90,}
+
+
         }}>
 
         <Tab.Screen name={homeName} component={HomeScreen} />
