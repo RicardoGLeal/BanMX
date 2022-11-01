@@ -8,6 +8,7 @@ export type paletteType = {
     textColor: string;
     secondaryRed: string;
     blueText: string;
+    yellow: string;
 };
 
 const palette: paletteType = {
@@ -20,6 +21,7 @@ const palette: paletteType = {
     textColor: '#3A3A3A',
     secondaryRed: '#E84B52',
     blueText: '#002D4D',
+    yellow: '#FCC815'
 };
 
 export type paletteColors = keyof typeof palette;
