@@ -46,7 +46,7 @@ function MainContainer() {
           activeTintColor: 'tomato',
           inactiveTintColor: 'grey',
           labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: [{padding:10}, styles.height]
+          style: [styles.height]
         }}>
 
         <Tab.Screen name={homeName} component={HomeScreen} />
