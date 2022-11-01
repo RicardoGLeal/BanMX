@@ -1,15 +1,13 @@
-import * as React from 'react';
-import { Platform, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
+import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
-import HomeScreen from './screens/HomeScreen';
-import DetailsScreen from './screens/DetailsScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import HomeScreen from "./screens/HomeScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 //Screen namesrr
 const homeName = "Home";
@@ -29,13 +27,11 @@ function MainContainer() {
             let rn = route.name;
 
             if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-
+              iconName = focused ? "home" : "home-outline";
             } else if (rn === detailsName) {
-              iconName = focused ? 'list' : 'list-outline';
-
+              iconName = focused ? "list" : "list-outline";
             } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+              iconName = focused ? "settings" : "settings-outline";
             }
 
             // You can return any component that you like here!
@@ -43,26 +39,27 @@ function MainContainer() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: '#FFE500',
-          inactiveTintColor: '#FFF2CB',
+          activeTintColor: "#FFE500",
+          inactiveTintColor: "#FFF2CB",
 
           labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: {backgroundColor: '#F12749', padding: 10, height: Platform.OS === "ios" ? 90 : 90,}
-
-
-        }}>
-
+          style: {
+            backgroundColor: "#F12749",
+            padding: 10,
+            height: styles.height,
+          },
+        }}
+      >
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
-
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  height: Platform.OS === 'ios' ? 200 : 100
+  height: Platform.OS === "ios" ? 90 : 70,
 });
 
 export default MainContainer;
