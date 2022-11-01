@@ -11,6 +11,7 @@ import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
 import VolunteerFormScreen from "./screens/VolunteerFormScreen";
+import AllyFormScreen from "./screens/AllyFormScreen";
 
 //Screen namesrr
 const homeName = "Home";
@@ -55,7 +56,7 @@ function MainContainer() {
       >
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={profileName} component={VolunteerFormScreen} />
+        <Tab.Screen name={profileName} component={AllyFormScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
