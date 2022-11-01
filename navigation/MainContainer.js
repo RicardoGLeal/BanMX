@@ -10,9 +10,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import { Platform } from 'react-native-web';
 
-//Screen names
+//Screen namesrr
 const homeName = "Home";
 const detailsName = "Details";
 const settingsName = "Settings";
