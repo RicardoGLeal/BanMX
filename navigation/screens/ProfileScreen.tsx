@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   Switch,
+  TouchableOpacity,
 } from "react-native";
 import palette from "../../palette";
 import StatProfile from "../../components/StatProfile";
@@ -58,7 +59,11 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <ProfileMap />
-        <Button title="Cerrar sesión" />
+        <View style={styles.button_container}>
+          <TouchableOpacity style={styles.button_style}>
+            <Text style={styles.button_text}>Cerrar sesión</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -114,6 +119,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     lineHeight: 24,
+    marginTop: 10,
+  },
+  button_style: {
+    backgroundColor: palette.primaryRed,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 100,
+
+    alignSelf: "flex-end",
+  },
+  button_text: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 18,
+  },
+  button_container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
     marginTop: 10,
   },
 });
