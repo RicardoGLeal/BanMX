@@ -45,17 +45,17 @@ export default function ProfileScreen({ navigation }) {
 
         <View>
           <Text style={styles.section_title}> Donaciones directas </Text>
-          <StatProfile />
+          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
-          <StatProfile />
+          <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
         </View>
 
         <View>
           <Text style={styles.section_title}> Puntos Totales </Text>
-          <StatProfile />
+          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
         </View>
 
         <ProfileMap />

@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
 import HomeScreen from "./screens/HomeScreen";
-import DetailsScreen from "./screens/DetailsScreen";
+import RankingScreen from "./screens/RankingScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
@@ -55,8 +55,8 @@ function MainContainer() {
         }}
       >
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={profileName} component={AllyFormScreen} />
+        <Tab.Screen name={detailsName} component={RankingScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

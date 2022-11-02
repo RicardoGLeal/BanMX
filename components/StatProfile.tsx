@@ -1,8 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import * as React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image
+} from "react-native";
 import palette from "../palette";
-import React from "react";
 
-export default function StatProfile() {
+
+export default function StatProfile({item}) {
+  const {place, user, value} = item;
   return (
     <View style={styles.container}>
       <View>
