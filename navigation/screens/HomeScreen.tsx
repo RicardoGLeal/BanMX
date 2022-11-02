@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     storiesContainer: {
       backgroundColor: '#ffffff',
-      height: '100%',
+      height: '95%',
       padding: 20,
       borderRadius: 18,
       margin: 10,
