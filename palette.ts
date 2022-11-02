@@ -12,6 +12,8 @@ export type paletteType = {
     black : string;
     labelText : string;
     inputBackground : string;
+    white: string;
+    blueButton: string;
 };
 
 const palette: paletteType = {
@@ -28,6 +30,8 @@ const palette: paletteType = {
     black: "#000000",
     labelText : "#000000",
     inputBackground : "#FFFFFF",
+    white: "#FFFFFF",
+    blueButton: "#1877F2",
 };
 
 export type paletteColors = keyof typeof palette;
