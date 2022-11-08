@@ -3,6 +3,7 @@ import { Platform, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
@@ -72,8 +73,8 @@ function Root() {
       })}
     >
       <Tab.Screen name={homeName} component={HomeScreen} />
-      <Tab.Screen name={profileName} component={SignUpScreen} />
       <Tab.Screen name={rankingName} component={RankingScreen} />
+      <Tab.Screen name={profileName} component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
@@ -81,11 +82,16 @@ function Root() {
 function MainContainer() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={{headerShown: false}}>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen
-            name="Root"
-            component={Root}
-            screenOptions={{ headerShown: false }}
+          name={"SignUp"}
+          component={SignUpScreen}
+          screenOptions={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="Root"
+          component={Root}
+          screenOptions={{ headerShown: false }}
         />
       </RootStack.Navigator>
     </NavigationContainer>

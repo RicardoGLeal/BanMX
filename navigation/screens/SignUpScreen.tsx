@@ -3,22 +3,23 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import palette from "../../palette";
 import BanInput from "../../components/BanInputText";
 import { Button } from "react-native-elements";
-import { Icon } from "react-native-elements";
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db, storage } from "../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, namedQuery, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function SignUpScreen({ navigation }) {
   const [err, setErr] = React.useState(false);
   const [errText, setErrText] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
   const [nameInputValue, setNameInputValue] = React.useState("");
   const [usenameInputValue, setUsernameInputValue] = React.useState("");
   const [mailInputValue, setMailInputValue] = React.useState("");
   const [passwordInputValue, setPasswordInputValue] = React.useState("");
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const res = await createUserWithEmailAndPassword(
         auth,
@@ -36,9 +37,13 @@ export default function SignUpScreen({ navigation }) {
         username: usenameInputValue,
         name: nameInputValue,
       });
+
+      navigation.navigate("Root", {});
     } catch (e) {
       setErr(true);
       console.log(e);
+      setErrText(e);
+      setLoading(false);
     }
   };
 
@@ -66,7 +71,8 @@ export default function SignUpScreen({ navigation }) {
         <Text style={styles.title}>Crear Cuenta</Text>
       </View>
 
-      {err && <Text>ERROOOOR</Text>}
+      {err && <Text>Error</Text>}
+      {loading && <Text>Creando cuenta...</Text>}
 
       <BanInput
         placeholder="Nombre Completo"
@@ -101,6 +107,7 @@ export default function SignUpScreen({ navigation }) {
         title={"Crear Cuenta"}
         buttonStyle={styles.button}
         onPress={handleSubmit}
+        disabled={loading}
       ></Button>
 
       <Text style={{ marginBottom: 20 }}>_____________ o _____________</Text>
