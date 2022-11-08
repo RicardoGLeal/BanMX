@@ -2,8 +2,8 @@ import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from '@react-navigation/stack';
-import { BlurView } from 'expo-blur';
+import { createStackNavigator } from "@react-navigation/stack";
+import { BlurView } from "expo-blur";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
@@ -16,6 +16,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import VolunteerFormScreen from "./screens/VolunteerFormScreen";
 import AllyFormScreen from "./screens/AllyFormScreen";
 import DetailsScreen from "./screens/DetailsScreen";
+import CreateAccountScreen from "./screens/CreateAccountScreen";
 
 //Screen namesrr
 const homeName = "Home";
@@ -29,51 +30,50 @@ const Tab = createBottomTabNavigator();
 function Root() {
   return (
     <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarActiveTintColor: "#FFE500",
-          tabBarInactiveTintColor: "#FFF2CB",
-          tabBarActiveBackgroundColor: "#F12749",
-          tabBarInactiveBackgroundColor: "#F12749",
-          tabBarStyle:{
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-            borderTopWidth: 0,
-            paddingTop: 10,
-            position: "absolute",
-            backgroundColor: "#F12749",
-            elevation: 0,
-          },
-          tabBarBadgeStyle:{
-            padding: 10,
-          },
-          tabBarLabelStyle:{
-            padding: 0,
-            fontSize: 10,
-          },
+      initialRouteName={homeName}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarActiveTintColor: "#FFE500",
+        tabBarInactiveTintColor: "#FFF2CB",
+        tabBarActiveBackgroundColor: "#F12749",
+        tabBarInactiveBackgroundColor: "#F12749",
+        tabBarStyle: {
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          borderTopWidth: 0,
+          paddingTop: 10,
+          position: "absolute",
+          backgroundColor: "#F12749",
+          elevation: 0,
+        },
+        tabBarBadgeStyle: {
+          padding: 10,
+        },
+        tabBarLabelStyle: {
+          padding: 0,
+          fontSize: 10,
+        },
 
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
 
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
+          if (rn === homeName) {
+            iconName = focused ? "home" : "home-outline";
+          } else if (rn === rankingName) {
+            iconName = focused ? "list" : "list-outline";
+          } else if (rn === profileName) {
+            iconName = focused ? "person" : "person-outline";
+          }
 
-            if (rn === homeName) {
-              iconName = focused ? "home" : "home-outline";
-            } else if (rn === rankingName) {
-              iconName = focused ? "list" : "list-outline";
-            } else if (rn === profileName) {
-              iconName = focused ? "person" : "person-outline";
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-      >
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={profileName} component={AllyFormScreen} />
-        <Tab.Screen name={rankingName} component={RankingScreen} />
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name={homeName} component={HomeScreen} />
+      <Tab.Screen name={profileName} component={AllyFormScreen} />
+      <Tab.Screen name={rankingName} component={RankingScreen} />
     </Tab.Navigator>
   );
 }
@@ -81,11 +81,11 @@ function Root() {
 function MainContainer() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={{headerShown: false}}>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen
-            name="Root"
-            component={Root}
-            screenOptions={{ headerShown: false }}
+          name="Root"
+          component={Root}
+          screenOptions={{ headerShown: false }}
         />
       </RootStack.Navigator>
     </NavigationContainer>
