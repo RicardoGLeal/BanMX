@@ -3,7 +3,6 @@ import { Platform, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { BlurView } from "expo-blur";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
