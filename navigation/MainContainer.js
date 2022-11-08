@@ -81,13 +81,41 @@ function Root() {
 function MainContainer() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        <RootStack.Screen
-          name="Root"
-          component={Root}
-          screenOptions={{ headerShown: false }}
-        />
-      </RootStack.Navigator>
+      <Tab.Navigator
+        initialRouteName={homeName}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            let rn = route.name;
+
+            if (rn === homeName) {
+              iconName = focused ? "home" : "home-outline";
+            } else if (rn === detailsName) {
+              iconName = focused ? "list" : "list-outline";
+            } else if (rn === profileName) {
+              iconName = focused ? "person" : "person-outline";
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "#FFE500",
+          inactiveTintColor: "#FFF2CB",
+
+          labelStyle: { paddingBottom: 10, fontSize: 10 },
+          style: {
+            backgroundColor: "#F12749",
+            padding: 10,
+            height: styles.height,
+          },
+        }}
+      >
+        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={profileName} component={SignUpScreen} />
+        <Tab.Screen name={detailsName} component={RankingScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
