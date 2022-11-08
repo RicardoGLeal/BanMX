@@ -9,7 +9,8 @@ import HomeScreen from "./screens/HomeScreen";
 import RankingScreen from "./screens/RankingScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-
+import SignInScreen from "./screens/SignInScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 import VolunteerFormScreen from "./screens/VolunteerFormScreen";
 import AllyFormScreen from "./screens/AllyFormScreen";
 
