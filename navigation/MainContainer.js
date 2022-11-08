@@ -84,6 +84,11 @@ function MainContainer() {
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Screen
+          name={"SignIn"}
+          component={SignInScreen}
+          screenOptions={{ headerShown: false }}
+        />
+        <RootStack.Screen
           name={"SignUp"}
           component={SignUpScreen}
           screenOptions={{ headerShown: false }}

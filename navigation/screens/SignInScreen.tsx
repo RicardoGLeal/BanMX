@@ -1,42 +1,102 @@
-import * as React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import palette from '../../palette';
-import BanInput from '../../components/BanInputText';
-import { Button } from 'react-native-elements';
+import * as React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import palette from "../../palette";
+import BanInput from "../../components/BanInputText";
+import { Button } from "react-native-elements";
 
 export default function SignInScreen({ navigation }) {
-    const [mailInputValue, setMailInputValue] = React.useState('');
-    const [passwordInputValue, setPasswordInputValue] = React.useState('');
+  const [err, setErr] = React.useState(false);
+  const [errText, setErrText] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.background }}>
+  const [mailInputValue, setMailInputValue] = React.useState("");
+  const [passwordInputValue, setPasswordInputValue] = React.useState("");
 
-            <Image style={{ width: 359, height: 400 }} source={require("../../assets/banmx_logo.png")} ></Image>
+  const handleSubmit = async () => {
+    navigation.navigate("Root", {});
+  };
 
-            <BanInput placeholder='Correo' onChange={setMailInputValue} value={mailInputValue}
-                containerStyle={{ width: 325, height: 55, marginBottom: 20 }} type='email-address'></BanInput>
-            <BanInput placeholder='Contraseña' onChange={setPasswordInputValue} value={passwordInputValue}
-                containerStyle={{ width: 325, height: 55, marginBottom: 8 }} secureTextEntry={true} type='default'></BanInput>
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: palette.background,
+      }}
+    >
+      <Image
+        style={{ width: 359, height: 400 }}
+        source={require("../../assets/banmx_logo.png")}
+      ></Image>
 
-            <Text style={{ textAlign: 'right', alignSelf: 'flex-end', marginBottom: 57, marginRight: 52 }}>¿Olvidaste tu Contraseña?</Text>
+      <BanInput
+        placeholder="Correo"
+        onChange={setMailInputValue}
+        value={mailInputValue}
+        containerStyle={{ width: 325, height: 55, marginBottom: 20 }}
+        type="email-address"
+      ></BanInput>
+      <BanInput
+        placeholder="Contraseña"
+        onChange={setPasswordInputValue}
+        value={passwordInputValue}
+        containerStyle={{ width: 325, height: 55, marginBottom: 8 }}
+        secureTextEntry={true}
+        type="default"
+      ></BanInput>
 
-            <Button title={"Iniciar Sesion"} buttonStyle={styles.button} ></Button>
-            
-            <Text>¿No tienes cuenta? Crear Cuenta</Text>
+      <Text
+        style={{
+          textAlign: "right",
+          alignSelf: "flex-end",
+          marginBottom: 57,
+          marginRight: 52,
+        }}
+      >
+        ¿Olvidaste tu Contraseña?
+      </Text>
 
-        </View>
-    );
+      <Button
+        title={"Iniciar Sesion"}
+        buttonStyle={styles.button}
+        onPress={handleSubmit}
+        disabled={loading}
+      ></Button>
+
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <Text>¿No tienes cuenta?</Text>
+        <Text
+          onPress={() => {
+            navigation.navigate("SignUp", {});
+          }}
+          style={{
+            marginLeft: 10,
+            fontWeight: "bold",
+            textDecorationLine: "underline",
+          }}
+        >
+          Crear Cuenta
+        </Text>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    button: {
-        backgroundColor: palette.primaryRed,
-        borderRadius: 14,
-        width: 325,
-        height: 50,
-        marginBottom: 10
-    }
-})
+  container: {
+    flex: 1,
+  },
+  button: {
+    backgroundColor: palette.primaryRed,
+    borderRadius: 14,
+    width: 325,
+    height: 50,
+    marginBottom: 10,
+  },
+});
