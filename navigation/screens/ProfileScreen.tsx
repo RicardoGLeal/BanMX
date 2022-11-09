@@ -12,10 +12,17 @@ import {
 import palette from "../../palette";
 import StatProfile from "../../components/StatProfile";
 import ProfileMap from "../../components/ProfileMap";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 export default function ProfileScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = React.useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const signOutAccount = () => {
+    signOut(auth);
+    navigation.navigate("SignIn", {});
+  };
 
   return (
     <View style={styles.container}>
@@ -45,22 +52,25 @@ export default function ProfileScreen({ navigation }) {
 
         <View>
           <Text style={styles.section_title}> Donaciones directas </Text>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
+          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
+          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Puntos Totales </Text>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
+          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
         </View>
 
         <ProfileMap />
         <View style={styles.button_container}>
-          <TouchableOpacity style={styles.button_style}>
+          <TouchableOpacity
+            style={styles.button_style}
+            onPress={signOutAccount}
+          >
             <Text style={styles.button_text}>Cerrar sesión</Text>
           </TouchableOpacity>
         </View>

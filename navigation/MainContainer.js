@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { AuthContext } from "../context/AuthContext";
 
 // Screens
 import HomeScreen from "./screens/HomeScreen";
@@ -46,13 +47,14 @@ function Root() {
           position: "absolute",
           backgroundColor: "#F12749",
           elevation: 0,
+          height: Platform.OS === "ios" ? 90 : 60,
         },
         tabBarBadgeStyle: {
           padding: 10,
         },
         tabBarLabelStyle: {
-          padding: 0,
           fontSize: 10,
+          paddingBottom: 10,
         },
 
         tabBarIcon: ({ focused, color, size }) => {
@@ -80,6 +82,9 @@ function Root() {
 }
 
 function MainContainer() {
+  const { currentUser } = React.useContext(AuthContext);
+  console.log(currentUser);
+
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
@@ -104,7 +109,7 @@ function MainContainer() {
 }
 
 const styles = StyleSheet.create({
-  height: Platform.OS === "ios" ? 90 : 70,
+  height: Platform.OS === "ios" ? 90 : 120,
 });
 
 export default MainContainer;

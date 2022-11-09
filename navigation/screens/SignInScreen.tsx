@@ -4,6 +4,9 @@ import palette from "../../palette";
 import BanInput from "../../components/BanInputText";
 import { Button } from "react-native-elements";
 
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+
 export default function SignInScreen({ navigation }) {
   const [err, setErr] = React.useState(false);
   const [errText, setErrText] = React.useState("");
@@ -13,7 +16,18 @@ export default function SignInScreen({ navigation }) {
   const [passwordInputValue, setPasswordInputValue] = React.useState("");
 
   const handleSubmit = async () => {
-    navigation.navigate("Root", {});
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        mailInputValue,
+        passwordInputValue
+      );
+      navigation.navigate("Root", {});
+    } catch (e) {
+      setErr(true);
+      setErrText(e);
+      console.log(e);
+    }
   };
 
   return (
@@ -29,6 +43,8 @@ export default function SignInScreen({ navigation }) {
         style={{ width: 359, height: 400 }}
         source={require("../../assets/banmx_logo.png")}
       ></Image>
+
+      {err && <Text>Error</Text>}
 
       <BanInput
         placeholder="Correo"
