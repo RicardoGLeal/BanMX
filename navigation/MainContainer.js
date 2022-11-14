@@ -104,6 +104,11 @@ function MainContainer() {
           component={Root}
           screenOptions={{ headerShown: false }}
         />
+        <RootStack.Screen
+          name="Details"
+          component={DetailsScreen}
+          screenOptions={{ headerShown: false }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

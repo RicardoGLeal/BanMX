@@ -60,7 +60,7 @@ export default function HomeScreen({ navigation }) {
         }}
       >
         <Text style={styles.title}>Hola, Carlo </Text>
-        <InformacionIconButton screen={"Profile"} />
+        <InformacionIconButton screen={"Details"} />
       </View>
       <View style={styles.storiesContainer}>
         <View style={{ alignItems: "center" }}>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   storiesContainer: {
     backgroundColor: "#ffffff",
-    height: "95%",
+    height: "87%",
     padding: 20,
     borderRadius: 18,
     margin: 10,
