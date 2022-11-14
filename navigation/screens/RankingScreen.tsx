@@ -18,6 +18,7 @@ export default function RankingScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
+        
         <View style = {{marginTop: 10}}>
           <Image source={require("../../assets/icon-little.png")} />
         </View>

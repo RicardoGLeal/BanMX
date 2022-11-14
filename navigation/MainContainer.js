@@ -8,6 +8,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthContext } from "../context/AuthContext";
 
 // Screens
+import DonateScreen from "./screens/DonateScreen";
 import HomeScreen from "./screens/HomeScreen";
 import RankingScreen from "./screens/RankingScreen";
 import SettingsScreen from "./screens/SettingsScreen";
