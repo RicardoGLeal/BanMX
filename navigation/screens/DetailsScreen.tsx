@@ -32,7 +32,7 @@ export default function DetailsScreen({ navigation }) {
                 alignContent: "center",
                 alignItems: "center"
             }}>
-                <View style={[{alignSelf: "flex-start", flex: 0.5}]}>
+                <View style={[{alignSelf: "flex-start", flex: 0.5, paddingTop: 20, paddingLeft: 20}]}>
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
                     >
@@ -79,8 +79,8 @@ export default function DetailsScreen({ navigation }) {
                             }}>
                             <TouchableOpacity onPress={() => handleClick(item.link)}>
                                 <Image
-                                    style={{width: 120,
-                                        height: 120,
+                                    style={{width: 110,
+                                        height: 110,
                                         resizeMode: 'contain'}} source={{uri:(item.src)}}
                                 />
                             </TouchableOpacity>
