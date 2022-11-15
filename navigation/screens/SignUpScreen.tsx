@@ -36,6 +36,7 @@ export default function SignUpScreen({ navigation }) {
         email: mailInputValue,
         username: usenameInputValue,
         name: nameInputValue,
+        public: true,
       });
 
       navigation.navigate("Root", {});
