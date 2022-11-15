@@ -14,8 +14,11 @@ import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
 import ProfileMap from "../../components/ProfileMap";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Paypal from "../../components/PayPal";
 
 export default function DonateScreen({ navigation }) {
+  const [checkout, setCheckOut] = React.useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
@@ -72,6 +75,18 @@ export default function DonateScreen({ navigation }) {
 
           <View style={styles.button_container_margin}>
           <TouchableOpacity style={styles.button_style_yellow}>
+
+          {checkout ? (
+            <Paypal />
+          ) : (
+            <button
+              onClick={() => {
+                setCheckOut(true);
+              }}
+            >
+              Checkout
+            </button>
+          )}
           <Image style={ styles.image }
      source={require("../../assets/paypalButton.png")} />
           </TouchableOpacity>
