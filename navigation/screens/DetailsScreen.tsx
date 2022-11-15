@@ -32,6 +32,13 @@ export default function DetailsScreen({ navigation }) {
                 alignContent: "center",
                 alignItems: "center"
             }}>
+                <View style={[{alignSelf: "flex-start", flex: 0.5}]}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                    >
+                    <Image style={{width: 50, height:50}} source={require("../../assets/chevron_left2.png")}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={{
                     flex: 7,
                     justifyContent: "center",
