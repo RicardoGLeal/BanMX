@@ -163,11 +163,23 @@ export default function HomeScreen({ navigation }) {
               Esto es lo que ha estado haciendo BAMX:
             </Text>
           </View>
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item) => String(item.id)}
-          />
+          {data.length > 0 ?           
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item) => String(item.id)}
+            /> 
+          : <Text style={{
+              fontSize: 32,
+              fontWeight: "bold",
+              justifyContent: "center",
+              textAlign: "center",
+              alignContent: "center",
+              alignItems: "center"
+            }}
+            >
+              No hay noticias para mostrar aún, esperalas pronto!
+            </Text> } 
         </View>
       </SafeAreaView>
     );
