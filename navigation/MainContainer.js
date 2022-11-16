@@ -25,6 +25,7 @@ const homeName = "Home";
 const detailsName = "Details";
 const profileName = "Profile";
 const rankingName = "Ranking";
+const donateName = "Donate";
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,11 @@ function MainContainer() {
         <RootStack.Screen
           name="Details"
           component={DetailsScreen}
+          screenOptions={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="Donate"
+          component={DonateScreen}
           screenOptions={{ headerShown: false }}
         />
       </RootStack.Navigator>
