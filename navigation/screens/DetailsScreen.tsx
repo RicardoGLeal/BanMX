@@ -1,11 +1,57 @@
+import { collection, getDocs } from 'firebase/firestore';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, SafeAreaView, Image, FlatList, Linking} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { db } from '../../firebase';
 import palette from '../../palette';
+
+class Ally {
+    id: number
+    src: string
+    link: string
+    constructor (id: number, src: string, link: string) {
+        this.id = id;
+        this.src = src;
+        this.link = link;
+    }
+    toString() {
+        return this.id + ', ' + this.id + ', ' + this.src + ', ' + this.link;
+    }
+  }
+  
+  // Firestore data converter
+  const allyConverter = {
+    toFirestore: (news: Ally) => {
+        return {
+          id: news.id,
+          src: news.src,
+          link: news.link,
+        };
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new Ally(data.id, data.src, data.link);
+    }
+  };
 
 export default function DetailsScreen({ navigation }) {
     const [dataSource, setDataSource] = useState([]);
+
+    const [data, setData] = useState<[Ally?]>([]);
+    const [loading, setLoading] = useState(true);
+    
+    const myAsyncFunction = async (): Promise<[Ally?]> => {
+        const querySnapshot = await getDocs(collection(db, "allies").withConverter(allyConverter));
+        const data : [Ally?] = [];
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        const ally : Ally = new Ally(doc.get("id"), doc.get("src"), doc.get("link"));
+        data.push(ally)
+        })
+        return data
+    }
+
     function handleClick(url:string) {
         Linking.canOpenURL(url).then(supported => {
           if (supported) {
@@ -15,16 +61,22 @@ export default function DetailsScreen({ navigation }) {
           }
         });
     };
+
     useEffect(() => {
-        let items = Array.apply(null, Array(10)).map((v, i) => {
-            return {
-                id: i,
-                src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Mojang_icon_2020.svg/1200px-Mojang_icon_2020.svg.png',
-                link: 'https://www.dineritopagos.com',
-            };
-        });
-        setDataSource(items);
+        setLoading(true);
+        const fetchData = async() => {
+          const data = await myAsyncFunction();
+          setData(data);
+          setLoading(false)
+        }
+        try{
+          fetchData()
+        } catch (error) {
+          console.log(error)
+          setLoading(false)
+        }
     }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{
@@ -67,29 +119,58 @@ export default function DetailsScreen({ navigation }) {
                     </Text>
                 </View>
                 <View style={{flex: 9, marginBottom: 15}}>
-                    <FlatList
-                    columnWrapperStyle={{justifyContent: 'space-between'}}
-                    style={{width: "100%"}}
-                        data={dataSource}
-                        renderItem={({item}) => (
+
+                    {
+                    loading ?  
                         <View
                             style={{
-                            flexDirection: 'column',
-                            margin: 4,
-                            }}>
-                            <TouchableOpacity onPress={() => handleClick(item.link)}>
-                                <Image
-                                    style={{width: 110,
-                                        height: 110,
-                                        resizeMode: 'contain'}} source={{uri:(item.src)}}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        )}
-                        //Setting the number of column
-                        numColumns={3}
-                        keyExtractor={(item, index) => String(index)}
-                    />
+                                paddingLeft: "10%",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                alignContent: "space-between",
+                                flexDirection: "row",
+                                paddingRight: "10%",
+                            }}
+                        >
+                            <Text style={styles.title}>Loading...</Text>
+                        </View> 
+                    : data.length > 0 ?
+                        <FlatList
+                            columnWrapperStyle={{justifyContent: 'space-between'}}
+                            style={{width: "100%"}}
+                            data={data}
+                            renderItem={({item}) => (
+                            <View
+                                style={{
+                                flexDirection: 'column',
+                                margin: 4,
+                                }}>
+                                <TouchableOpacity onPress={() => handleClick(item.link)}>
+                                    <Image
+                                        style={{width: 110,
+                                            height: 110,
+                                            resizeMode: 'contain'}} source={{uri:(item.src)}}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            )}
+                            //Setting the number of column
+                            numColumns={3}
+                            keyExtractor={(item, index) => String(index)}
+                        />
+                        :
+                        <Text style={{
+                            fontSize: 32,
+                            fontWeight: "bold",
+                            justifyContent: "center",
+                            textAlign: "center",
+                            alignContent: "center",
+                            alignItems: "center"
+                        }}
+                        >
+                            No hay aliados para mostrar aún, unete!
+                        </Text>  
+                    }
                 </View>
                 <View style={[{flexDirection: 'row', flex: 1.5}, styles.button_container]}>
                     <TouchableOpacity
@@ -147,6 +228,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 10,
         marginBottom: 10,
+      },
+      title: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: "#3A3A3A",
       },
   });
   
