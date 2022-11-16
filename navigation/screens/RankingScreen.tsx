@@ -59,7 +59,9 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
           <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
         </View>
         {/* <ProfileMap /> */}
-        <View style={styles.button_container}>
+        <View style={styles.button_container} onTouchEnd={() =>
+          navigation.navigate('Donate')
+        }>
           <TouchableOpacity style={styles.button_style}>
             <Text style={styles.button_text}>Donar</Text>
           </TouchableOpacity>
