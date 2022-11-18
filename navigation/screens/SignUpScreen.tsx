@@ -39,6 +39,11 @@ export default function SignUpScreen({ navigation }) {
         public: true,
       });
 
+      await setDoc(doc(db, "referrals", res.user.uid), {
+        uid: res.user.uid,
+        referidos: 0,
+      });
+
       navigation.navigate("Root", {});
     } catch (e) {
       setErr(true);

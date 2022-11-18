@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     borderRadius: 42,
+    marginBottom: 4,
   },
   header_text: {
     color: "#FFFFFF",

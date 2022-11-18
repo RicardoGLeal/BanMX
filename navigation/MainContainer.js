@@ -84,9 +84,6 @@ function Root() {
 }
 
 function MainContainer() {
-  const { currentUser } = React.useContext(AuthContext);
-  console.log(currentUser);
-
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>

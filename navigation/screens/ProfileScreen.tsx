@@ -9,37 +9,77 @@ import {
   Switch,
   TouchableOpacity,
 } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import palette from "../../palette";
 import StatProfile from "../../components/StatProfile";
 import ProfileMap from "../../components/ProfileMap";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { AuthContext } from "../../context/AuthContext";
+import InformacionIconButton from "../../components/InformacionIconButton";
+import {
+  doc,
+  DocumentReference,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function ProfileScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = React.useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const { currentUser } = React.useContext(AuthContext);
+  const [name, setName] = React.useState("");
+
+  const toggleSwitch = async () => {
+    const docRef = doc(db, "users", currentUser.uid);
+    setIsEnabled((previousState) => !previousState);
+    await updateDoc(docRef, {
+      public: !isEnabled,
+    });
+  };
 
   const signOutAccount = () => {
     signOut(auth);
     navigation.navigate("SignIn", {});
   };
 
+  const getReferralLink = async () => {
+    let baseUrl: string = "http://localhost:8080/descargar/referral/?id=";
+    await Clipboard.setStringAsync(baseUrl.concat(currentUser.uid));
+    console.log("Copied to clipboard!");
+  };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const docRef = doc(db, "users", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+      setName(docSnap.data().name);
+      setIsEnabled(docSnap.data().public);
+    };
+
+    try {
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentUser]);
+
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
         <View>
-          <Image source={require("../../assets/icon-little.png")} />
+          <InformacionIconButton screen={"Details"} />
         </View>
         <View>
-          <View style={styles.circle}>
+          <TouchableOpacity style={styles.circle} onPress={getReferralLink}>
             <Image source={require("../../assets/akar-icons_link-chain.png")} />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.main_container}>
-        <Text style={styles.title_style}> Carlo Lujan </Text>
-        <Text> @carlolj </Text>
+        <Text style={styles.title_style}> {name} </Text>
+        <Text> @{currentUser.displayName} </Text>
         <View style={styles.switch_container}>
           <Text> Cuenta publica </Text>
           <Switch
