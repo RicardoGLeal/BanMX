@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import palette from "../../palette";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import InformacionIconButton from "../../components/InformacionIconButton";
 
 async function donate(amount) {
   switch(amount) {
@@ -39,8 +40,8 @@ export default function DonateScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
-        <View style={{ marginTop: 10 }}>
-          <Image source={require("../../assets/icon-little.png")} />
+        <View style={{ marginTop: 20 }}>
+          <InformacionIconButton screen={"Details"} />
         </View>
         <View style={styles.back}>
           <Ionicons name={"chevron-back-outline"} size={32} color={"#000000"} />
