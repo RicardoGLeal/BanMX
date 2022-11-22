@@ -14,17 +14,17 @@ export default function StatProfile({item}) {
     <View style={styles.container}>
       <View>
         <View style={styles.circle}>
-          <Text style={styles.number}>3°</Text>
+          <Text style={styles.number}>{place}</Text>
         </View>
       </View>
 
       <View>
-        <Text style={styles.text_style}> Tú </Text>
+        <Text style={styles.text_style}>{user}</Text>
       </View>
 
       <View style={styles.pill_container}>
         <View style={styles.pill}>
-          <Text style={styles.pill_text}>$1800</Text>
+          <Text style={styles.pill_text}>{value}</Text>
         </View>
       </View>
     </View>

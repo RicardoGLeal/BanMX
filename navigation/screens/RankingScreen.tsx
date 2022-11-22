@@ -8,13 +8,105 @@ import {
   Button,
   Switch,
   TouchableOpacity,
+  FlatList
 } from "react-native";
 import palette from "../../palette";
+import { query, orderBy, limit, collection, getDocs, where} from "firebase/firestore";  
+import { db } from "../../firebase";
 import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
 import ProfileMap from "../../components/ProfileMap";
 
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    place: 1,
+    user : "monty",
+    value : 1800,
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bb',
+    place: 2,
+    user : "carlo",
+    value : 1600,
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bc',
+    place: 1,
+    user : "angel",
+    value : 1400,
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f6d',
+    title: 'Second Item',
+  },
+];
+
+const You = ({item}) =>(
+  <View style = {styles.row_with_margin}>
+          <StatProfile item = {{place: item.place, user: item.user, value:item.donations}}/>
+        </View> )
+
+const Item = ({ place, user, value }) => (
+  place !==3 ?(
+  <View style = {styles.row_with_margin}>
+          <StatProfile item = {{place: place, user: user, value:value}}/>
+        </View> ): (
+  <View style = {styles.row_with_margin_and_line}>
+          <StatProfile item = {{place: place, user: user, value:value}}/>
+        </View> )
+);
 export default function RankingScreen({ navigation }) {
+
+  const [data, setData] = React.useState();
+  const [yourPosition, setYourPosition] = React.useState();
+
+  const donations = collection(db, "donations");
+
+    const getData = async () => {
+        const snapshot = await getDocs(query(donations, orderBy("donations", "desc"), limit(3)))
+        let response = []
+        let idx = 1;
+        let json;
+        snapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          json["id"] = doc.id
+          json["place"] = idx;
+          response.push(json);
+          idx ++;
+          
+        });
+        setData(response)
+    }
+    const getYourPosition = async () => {
+      const snapshot = await getDocs(query(donations, where("user", "==", "Carlo"), limit(1)))
+        let response = []
+        let idx = 1;
+        let json;
+        snapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          json["id"] = doc.id
+          json["place"] = idx;
+          response.push(json);
+          idx ++;
+          
+        });
+        setYourPosition(response)
+
+    }
+
+    React.useEffect(() => {
+        getData()
+        getYourPosition()
+    }, [])
+   
+  const renderItem = ({ item }) => (
+    <Item place = {item.place} user = {item.user} value = {item.donations} />
+  );
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
@@ -44,7 +136,13 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>
         </View>
-        <View style = {styles.row_with_margin}>
+
+        <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+        {/* <View style = {styles.row_with_margin}>
           <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
         </View>
 
@@ -57,7 +155,9 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         </View>
         <View style = {styles.row_with_margin}>
           <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
-        </View>
+        </View> */}
+        
+       <You item = {yourPosition != undefined ? yourPosition[0] : {}}/>
         {/* <ProfileMap /> */}
         <View style={styles.button_container} onTouchEnd={() =>
           navigation.navigate('Donate')
@@ -78,9 +178,13 @@ const styles = StyleSheet.create({
         fontWeight: "900"
     },
     row_with_margin: {
+      paddingRight: 10,
+      paddingLeft: 30,
         marginBottom: 6
     },
     row_with_margin_and_line: {
+      paddingRight: 10,
+      paddingLeft : 30,
         paddingBottom: 10,
         borderBottomColor: "#3A3A3A",
         borderBottomWidth: 2,
