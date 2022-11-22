@@ -14,7 +14,7 @@ import { Item as ItemType } from "../../components/HomeScreenFeedItem";
 import InformacionIconButton from "../../components/InformacionIconButton";
 import { AuthContext } from "../../context/AuthContext";
 import palette from "../../palette";
-import { collection, getDocs, QuerySnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, QuerySnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 class News {
@@ -53,6 +53,8 @@ export default function HomeScreen({ navigation }) {
 
   const [data, setData] = useState<[News?]>([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = React.useContext(AuthContext);
+  const [name, setName] = React.useState("");
   
   const myAsyncFunction = async (): Promise<[News?]> => {
     const querySnapshot = await getDocs(collection(db, "news").withConverter(newsConverter));
@@ -76,7 +78,13 @@ export default function HomeScreen({ navigation }) {
       setData(data);
       setLoading(false)
     }
+    const fetchUser = async () => {
+      const docRef = doc(db, "users", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+      setName(docSnap.data().username);
+    };
     try{
+      fetchUser()
       fetchData()
     } catch (error) {
       console.log(error)
@@ -114,7 +122,7 @@ export default function HomeScreen({ navigation }) {
             paddingRight: "10%",
           }}
         >
-          <Text style={styles.title}>Hola, Carlo </Text>
+          <Text style={styles.title}>Hola{name ?  ", " + name : "loading.."} </Text>
           <InformacionIconButton screen={"Details"} />
         </View>
         <View style={styles.storiesContainer}>
