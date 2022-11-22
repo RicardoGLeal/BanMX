@@ -17,34 +17,10 @@ import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
 import ProfileMap from "../../components/ProfileMap";
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    place: 1,
-    user : "monty",
-    value : 1800,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bb',
-    place: 2,
-    user : "carlo",
-    value : 1600,
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bc',
-    place: 1,
-    user : "angel",
-    value : 1400,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f6d',
-    title: 'Second Item',
-  },
-];
 
 const You = ({item}) =>(
   <View style = {styles.row_with_margin}>
-          <StatProfile item = {{place: item.place, user: item.user, value:item.donations}}/>
+          <StatProfile item = {{place: item.place, user: "Tú", value:item.donations}}/>
         </View> )
 
 const Item = ({ place, user, value }) => (
@@ -69,7 +45,6 @@ export default function RankingScreen({ navigation }) {
         let idx = 1;
         let json;
         snapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
           json = doc.data()
           json["id"] = doc.id
@@ -127,7 +102,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
 <Text style={styles.veryBigText}> 300000 </Text>
 <View style = {styles.textContainer}>
         </View> 
-        <Dashboard/>
+        <Dashboard item = {data != undefined ? data[0] : {}}/>
         <View style={styles.button_container_row}>
           <TouchableOpacity style={styles.button_style_row_yellow}>
             <Text style={styles.button_text}>Donaciones</Text>

@@ -2,28 +2,29 @@ import { View, Text,TouchableOpacity, Image, StyleSheet  } from "react-native";
 import palette from "../palette";
 import React from "react";
 
-export default function Dashboard() {
+export default function Dashboard({item}) {
   return (
     <View style={styles.container}>
       <View>
-        
         <View style ={styles.first}>
             <View style={styles.circle}>
-          <Text style={styles.number}>3°</Text>
+          <Text style={styles.number}> {item.place}°</Text>
         </View>
         </View>
         <View style ={styles.second}>
             <View style = {{ flex: 1, height: 10, marginTop: 20}}>
                 <View style = {styles.trophyAndText}> 
-                <View style = {{width: 30, marginRight: 20}}><Image source={require("../assets/trophy.png")} /></View>
-                <View style = {{ width : 200}}><Text style = {styles.boldAndBig}> Alex88_Rod </Text></View></View>
-                
-                
-                
+                <View style = {{width: 30, marginRight: 20}}>
+                    <Image source={require("../assets/trophy.png")} />
+                </View>
+                <View style = {{ width : 200}}>
+                    <Text style = {styles.boldAndBig}> {item.user} </Text>
+                </View>
+            </View>
             </View>
             <View style = {{ flex: 1, height: 30}}>
             <View style={styles.pill}>
-          <Text style={styles.pill_text}>124213</Text>
+          <Text style={styles.pill_text}> {item.donations} </Text>
         </View>
                 
             </View>
