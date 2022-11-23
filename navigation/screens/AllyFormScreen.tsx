@@ -11,14 +11,19 @@ import palette from "../../palette";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default function AllyFormScreen() {
+export default function AllyFormScreen({ navigation }) {
   const [number, onChangeNumber] = React.useState(null);
   const [mensaje, onChangeMensaje] = React.useState(null);
   const [empresa, onChangeEmpresa] = React.useState(null);
   return (
     <View style={styles.container}>
       <View style={styles.back}>
-        <Ionicons name={"chevron-back-outline"} size={32} color={"#000000"} />
+        <Ionicons
+          name={"chevron-back-outline"}
+          size={32}
+          color={"#000000"}
+          onPress={() => navigation.goBack()}
+        />
       </View>
       <View style={styles.main_container}>
         <Image

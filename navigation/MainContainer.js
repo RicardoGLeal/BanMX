@@ -112,6 +112,16 @@ function MainContainer() {
           component={DonateScreen}
           screenOptions={{ headerShown: false }}
         />
+        <RootStack.Screen
+          name="VolunteerForm"
+          component={VolunteerFormScreen}
+          screenOptions={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="AllyForm"
+          component={AllyFormScreen}
+          screenOptions={{ headerShown: false }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
