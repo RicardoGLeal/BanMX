@@ -93,15 +93,6 @@ export default function DetailsScreen({ navigation }) {
     }
   }, []);
 
-  /*
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              style={{ width: 50, height: 50 }}
-              source={require("../../assets/chevron_left2.png")}
-            />
-          </TouchableOpacity>
-  */
-
   return (
     <SafeAreaView style={styles.container}>
       <View

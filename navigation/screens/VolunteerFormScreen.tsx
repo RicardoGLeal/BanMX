@@ -10,10 +10,26 @@ import React from "react";
 import palette from "../../palette";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { sendEmail } from "../../send-email";
 
 export default function VolunteerFormScreen({ navigation }) {
   const [number, onChangeNumber] = React.useState(null);
   const [mensaje, onChangeMensaje] = React.useState(null);
+
+  const sendEmailToBanmx = async () => {
+    const email = "comunicacionbamx@bdalimentos.org";
+    const subject = "Quiero ser Aliado!";
+    const body = `Numero de contacto: ${number}\nMensaje:\n${mensaje}`;
+    try {
+      await sendEmail(email, subject, body);
+    } catch (e) {
+      console.log("ERROR al mandar correo");
+      navigation.goBack();
+    }
+    console.log("Correo enviado!");
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.back}>
@@ -52,7 +68,10 @@ export default function VolunteerFormScreen({ navigation }) {
         </View>
 
         <View style={styles.button_container}>
-          <TouchableOpacity style={styles.button_style}>
+          <TouchableOpacity
+            style={styles.button_style}
+            onPress={() => sendEmailToBanmx}
+          >
             <Text style={styles.button_text}>Enviar</Text>
           </TouchableOpacity>
         </View>
