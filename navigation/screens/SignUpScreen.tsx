@@ -85,14 +85,14 @@ export default function SignUpScreen({ navigation }) {
         onChange={setNameInputValue}
         value={nameInputValue}
         containerStyle={{ width: 325, height: 55, marginBottom: 15 }}
-        type="email-address"
+        type="default"
       ></BanInput>
       <BanInput
         placeholder="Usuario"
         onChange={setUsernameInputValue}
         value={usenameInputValue}
         containerStyle={{ width: 325, height: 55, marginBottom: 15 }}
-        type="email-address"
+        type="default"
       ></BanInput>
       <BanInput
         placeholder="Correo"
