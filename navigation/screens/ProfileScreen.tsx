@@ -43,7 +43,7 @@ export default function ProfileScreen({ navigation }) {
         let json;
         
         snapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+          
           json = doc.data()
           if (json["user"] == "Carlo")
           {
@@ -69,7 +69,7 @@ export default function ProfileScreen({ navigation }) {
         let json;
         
         snapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+          
           json = doc.data()
           if (json["user"] == "Carlo")
           {
@@ -93,7 +93,7 @@ export default function ProfileScreen({ navigation }) {
         let json;
         
         snapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+          
           json = doc.data()
           if (json["user"] == "Carlo")
           {
@@ -106,7 +106,7 @@ export default function ProfileScreen({ navigation }) {
 
           
         });
-        setDonatePosition(response);
+        setPuntosTotales(response);
   }
 
   const toggleSwitch = async () => {
@@ -134,6 +134,8 @@ export default function ProfileScreen({ navigation }) {
       const docSnap = await getDoc(docRef);
       const donatePosition_ = await getDonatePosition();
       const numeroReferidos_ = await getNumeroReferidos();
+      const puntosTotales_ = await getPuntosTotales();
+      
       setName(docSnap.data().name);
       setIsEnabled(docSnap.data().public);
     };
