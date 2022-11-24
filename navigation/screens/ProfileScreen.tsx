@@ -14,6 +14,7 @@ import palette from "../../palette";
 import StatProfile from "../../components/StatProfile";
 import ProfileMap from "../../components/ProfileMap";
 import { signOut } from "firebase/auth";
+import { query, orderBy, collection, getDocs} from "firebase/firestore";  
 import { auth, db } from "../../firebase";
 import { AuthContext } from "../../context/AuthContext";
 import InformacionIconButton from "../../components/InformacionIconButton";
@@ -27,8 +28,44 @@ import {
 
 export default function ProfileScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = React.useState(false);
+  const [donatePosition, setDonatePosition] = React.useState(false);
+  const [numeroReferidos, setNumeroReferidos] = React.useState(false);
+  const [puntosTotales, setPuntosTotales] = React.useState(false);
+
   const { currentUser } = React.useContext(AuthContext);
   const [name, setName] = React.useState("");
+
+  const getDonatePosition = async () => {
+    const donations = collection(db, "donations");
+    const snapshot = await getDocs(query(donations, orderBy("donations", "desc")))
+        let response = {place: -1, user: "Carlo", donations: 0}; 
+        let idx = 1;
+        let json;
+        
+        snapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          if (json["user"] == "Carlo")
+          {
+            response["place"] = idx;
+            response["user"] = "Carlo"
+            response["donations"] = json["donations"]
+          }
+          
+          idx ++;
+
+          
+        });
+        setDonatePosition(response);
+  }
+
+  const getNumeroReferidos = async () => {
+
+  }
+
+  const getPuntosTotales = async () => {
+    
+  }
 
   const toggleSwitch = async () => {
     const docRef = doc(db, "users", currentUser.uid);
@@ -53,6 +90,7 @@ export default function ProfileScreen({ navigation }) {
     const fetchData = async () => {
       const docRef = doc(db, "users", currentUser.uid);
       const docSnap = await getDoc(docRef);
+      const donatePosition = await getDonatePosition();
       setName(docSnap.data().name);
       setIsEnabled(docSnap.data().public);
     };
@@ -92,17 +130,19 @@ export default function ProfileScreen({ navigation }) {
 
         <View>
           <Text style={styles.section_title}> Donaciones directas </Text>
-          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
+          <StatProfile item={{ place: donatePosition["place"], 
+                               user: donatePosition["user"], 
+                               value: donatePosition["donations"]}} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
-          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
+          <StatProfile item={{ place: "1", user: "Tu", value: "1" }} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Puntos Totales </Text>
-          <StatProfile item={{ place: "1", user: "monty", value: "1" }} />
+          <StatProfile item={{ place: "1", user: "Tu", value: "1" }} />
         </View>
 
         <ProfileMap />
