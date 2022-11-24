@@ -59,8 +59,30 @@ export default function ProfileScreen({ navigation }) {
         setDonatePosition(response);
   }
 
-  const getNumeroReferidos = async () => {
+  
 
+  const getNumeroReferidos = async () => {
+    const donations = collection(db, "donations");
+    const snapshot = await getDocs(query(donations, orderBy("donations", "desc")))
+        let response = {place: -1, user: "Carlo", referals: 0}; 
+        let idx = 1;
+        let json;
+        
+        snapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          if (json["user"] == "Carlo")
+          {
+            response["place"] = idx;
+            response["user"] = "Carlo"
+            response["referals"] = json["referals"] != undefined ? json["referals"] : 0
+          }
+          
+          idx ++;
+
+          
+        });
+        setNumeroReferidos(response);
   }
 
   const getPuntosTotales = async () => {
@@ -90,7 +112,8 @@ export default function ProfileScreen({ navigation }) {
     const fetchData = async () => {
       const docRef = doc(db, "users", currentUser.uid);
       const docSnap = await getDoc(docRef);
-      const donatePosition = await getDonatePosition();
+      const donatePosition_ = await getDonatePosition();
+      const numeroReferidos_ = await getNumeroReferidos();
       setName(docSnap.data().name);
       setIsEnabled(docSnap.data().public);
     };
@@ -137,7 +160,9 @@ export default function ProfileScreen({ navigation }) {
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
-          <StatProfile item={{ place: "1", user: "Tu", value: "1" }} />
+          <StatProfile item={{ place: numeroReferidos["place"], 
+                               user: numeroReferidos["user"], 
+                               value: numeroReferidos["referals"] }} />
         </View>
 
         <View>
