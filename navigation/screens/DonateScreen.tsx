@@ -65,7 +65,7 @@ export default function DonateScreen({ navigation }) {
           <InformacionIconButton screen={"Details"} />
         </View>
         <View style={styles.back}>
-          <Ionicons name={"chevron-back-outline"} size={32} color={"#000000"} />
+          <Ionicons name={"chevron-back-outline"} size={32} color={"#000000"} onPress={() => navigation.goBack()} />
         </View>
       </View>
 
