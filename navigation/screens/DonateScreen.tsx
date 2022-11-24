@@ -12,25 +12,46 @@ import palette from "../../palette";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
+import { db } from "../../firebase";
+import { query, orderBy, limit, collection, getDocs, where, updateDoc} from "firebase/firestore";
+async function updateDonations(amount){
+    const donations = collection(db, "donations");
+        const snapshot = await getDocs(query(donations, where("user", "==", "Carlo")))
+        
+        snapshot.forEach(function(doc) {
+                console.log(doc.id, " => ", doc.data());
+                updateDoc(doc.ref, {donations:doc.data().donations + amount});
+                // ({foo: "bar"})
+                // await updateDoc(doc, {donations: 0})
+                
+                //not doc.update({foo: "bar"})
+            });
+}
 async function donate(amount) {
   switch(amount) {
     case 200:
+   
+      await updateDonations(amount);
       await Linking.openURL("https://pay.conekta.com/link/74659d73d8af4c419e8e27dd19468e08"); 
       break;
       
     case 400:
+        await updateDonations(amount);
       await Linking.openURL("https://pay.conekta.com/link/c503fdcc6bb74a3c991907aea583e60e"); 
       break;
 
     case 800:
+        await updateDonations(amount);
       await Linking.openURL("https://pay.conekta.com/link/d22fc96686104e30a3351dc5eeb29d1a");
       break;
 
     case 1200:
+        await updateDonations(amount);
       await Linking.openURL("https://pay.conekta.com/link/48d0dc0733494452a134c5a77b184784");
       break;
 
     case 1600:
+        await updateDonations(amount);
       await Linking.openURL("https://pay.conekta.com/link/1192db4e88f74f3ca57f080b6bf0fa40");
       break;
   }

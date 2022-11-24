@@ -116,15 +116,17 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: palette.secondaryRed,
-    width: 400,
-    height: 150,
+    width: "80%",
+    height: "80%",
     borderRadius: 10,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: 'center',
     marginTop: 15,
-    marginBottom: 20
+    marginBottom: 10,
+    
+    // marginHorizontal: 20
   },
   text_style: {
     fontWeight: "700",

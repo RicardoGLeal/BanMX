@@ -8,6 +8,7 @@ import {
   Button,
   Switch,
   TouchableOpacity,
+  ScrollView,
   FlatList
 } from "react-native";
 import palette from "../../palette";
@@ -99,7 +100,8 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
 <Text style={styles.veryBigText}> 300000 </Text>
 <View style = {styles.textContainer}>
         </View> 
-        <Dashboard item = {data != undefined ? data[0] : {}}/>
+        <View style = {styles.dashboard}><Dashboard item = {data != undefined ? data[0] : {}}/></View>
+        
         <View style={styles.button_container_row}>
           <TouchableOpacity style={styles.button_style_row_yellow}>
             <Text style={styles.button_text}>Donaciones</Text>
@@ -108,7 +110,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>
         </View>
-
+    <ScrollView style = {styles.leaderboard}>
         <FlatList
         data={data}
         renderItem={renderItem}
@@ -130,6 +132,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         </View> */}
         
        <You item = {yourPosition != undefined ? yourPosition[0] : {}}/>
+       </ScrollView>
         {/* <ProfileMap /> */}
         <View style={styles.button_container} onTouchEnd={() =>
           navigation.navigate('Donate')
@@ -144,6 +147,13 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
 }
 
 const styles = StyleSheet.create({
+  dashboard : {
+    maxHeight: "25%"
+  },
+  leaderboard:{
+    maxHeight: "30%"
+    
+  },
     veryBigText: {
         fontSize: 36,
         color: "#FBC714",
@@ -167,7 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textContainer: {
-      marginBottom: 20
+      marginBottom: 30
   },
   top_container: {
     display: "flex",
