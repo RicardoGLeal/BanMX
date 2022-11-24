@@ -97,7 +97,7 @@ export default function RankingScreen({ navigation }) {
         <Text style={styles.light_title_style}> Se parte de la ayuda! </Text>
         <Text style={styles.detailText}>{`Ayuda a BAMX con su mision de terminar con el 
 hambre en mexico. Dona y ve nuestro progreso!`}</Text>
-<Text style={styles.veryBigText}> 300000 </Text>
+<Text style={styles.veryBigText}> {yourPosition.total}</Text>
 <View style = {styles.textContainer}>
         </View> 
         <View style = {styles.dashboard}><Dashboard item = {data != undefined ? data[0] : {}}/></View>

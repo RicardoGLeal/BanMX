@@ -27,6 +27,7 @@ import {
 } from "firebase/firestore";
 
 export default function ProfileScreen({ navigation }) {
+  console.log(auth);
   const [isEnabled, setIsEnabled] = React.useState(false);
   const [donatePosition, setDonatePosition] = React.useState(false);
   const [numeroReferidos, setNumeroReferidos] = React.useState(false);
