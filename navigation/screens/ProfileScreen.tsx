@@ -63,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
 
   const getNumeroReferidos = async () => {
     const donations = collection(db, "donations");
-    const snapshot = await getDocs(query(donations, orderBy("donations", "desc")))
+    const snapshot = await getDocs(query(donations, orderBy("referals", "desc")))
         let response = {place: -1, user: "Carlo", referals: 0}; 
         let idx = 1;
         let json;
@@ -86,7 +86,27 @@ export default function ProfileScreen({ navigation }) {
   }
 
   const getPuntosTotales = async () => {
-    
+    const donations = collection(db, "donations");
+    const snapshot = await getDocs(query(donations, orderBy("total", "desc")))
+        let response = {place: -1, user: "Carlo", donations: 0}; 
+        let idx = 1;
+        let json;
+        
+        snapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          if (json["user"] == "Carlo")
+          {
+            response["place"] = idx;
+            response["user"] = "Carlo";
+            response["total"] = json["total"];
+          }
+          
+          idx ++;
+
+          
+        });
+        setDonatePosition(response);
   }
 
   const toggleSwitch = async () => {
@@ -154,20 +174,22 @@ export default function ProfileScreen({ navigation }) {
         <View>
           <Text style={styles.section_title}> Donaciones directas </Text>
           <StatProfile item={{ place: donatePosition["place"], 
-                               user: donatePosition["user"], 
+                               user: "Tu", 
                                value: donatePosition["donations"]}} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
           <StatProfile item={{ place: numeroReferidos["place"], 
-                               user: numeroReferidos["user"], 
+                               user: "Tu", 
                                value: numeroReferidos["referals"] }} />
         </View>
 
         <View>
           <Text style={styles.section_title}> Puntos Totales </Text>
-          <StatProfile item={{ place: "1", user: "Tu", value: "1" }} />
+          <StatProfile item={{ place: puntosTotales["place"], 
+                               user: "Tu", 
+                               value: puntosTotales["total"] }} />
         </View>
 
         <ProfileMap />
