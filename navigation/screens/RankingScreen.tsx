@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import palette from "../../palette";
 import { query, orderBy, limit, collection, getDocs, where} from "firebase/firestore";  
-import { db } from "../../firebase";
+import {auth, db } from "../../firebase";
 import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
 import ProfileMap from "../../components/ProfileMap";
@@ -42,7 +42,7 @@ export default function RankingScreen({ navigation }) {
   const donations = collection(db, "donations");
 
     const getData = async () => {
-        const snapshot = await getDocs(query(donations, orderBy("donations", "desc"), limit(3)))
+        const snapshot = await getDocs(query(donations, orderBy("total", "desc"), limit(3)))
         let response = []
         let idx = 1;
         let json;
@@ -58,7 +58,7 @@ export default function RankingScreen({ navigation }) {
         setData(response)
     }
     const getYourPosition = async () => {
-      const snapshot = await getDocs(query(donations, where("user", "==", "Carlo"), limit(1)))
+      const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"]), limit(1)))
         let response = []
         let idx = 1;
         let json;
@@ -116,24 +116,11 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-        {/* <View style = {styles.row_with_margin}>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
-        </View>
 
-        <View style = {styles.row_with_margin}>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
-        </View>
-
-        <View style = {styles.row_with_margin_and_line}>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}} />
-        </View>
-        <View style = {styles.row_with_margin}>
-          <StatProfile item = {{place: "1", user: "monty", value: "1"}}/>
-        </View> */}
         
        <You item = {yourPosition != undefined ? yourPosition[0] : {}}/>
        </ScrollView>
-        {/* <ProfileMap /> */}
+
         <View style={styles.button_container} onTouchEnd={() =>
           navigation.navigate('Donate')
         }>

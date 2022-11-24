@@ -12,11 +12,11 @@ import palette from "../../palette";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
-import { db } from "../../firebase";
+import { db, auth } from "../../firebase";
 import { query, orderBy, limit, collection, getDocs, where, updateDoc} from "firebase/firestore";
 async function updateDonations(amount){
     const donations = collection(db, "donations");
-        const snapshot = await getDocs(query(donations, where("user", "==", "Carlo")))
+        const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"])))
         
         snapshot.forEach(function(doc) {
                 console.log(doc.id, " => ", doc.data());

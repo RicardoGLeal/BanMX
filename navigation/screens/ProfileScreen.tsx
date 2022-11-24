@@ -45,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
         snapshot.forEach((doc) => {
           
           json = doc.data()
-          if (json["user"] == "Carlo")
+          if (json["user"] == auth["currentUser"]["displayName"])
           {
             response["place"] = idx;
             response["user"] = "Carlo"
@@ -64,14 +64,14 @@ export default function ProfileScreen({ navigation }) {
   const getNumeroReferidos = async () => {
     const donations = collection(db, "donations");
     const snapshot = await getDocs(query(donations, orderBy("referals", "desc")))
-        let response = {place: -1, user: "Carlo", referals: 0}; 
+        let response = {place: -1, user: auth["currentUser"]["displayName"], referals: 0}; 
         let idx = 1;
         let json;
         
         snapshot.forEach((doc) => {
           
           json = doc.data()
-          if (json["user"] == "Carlo")
+          if (json["user"] == auth["currentUser"]["displayName"])
           {
             response["place"] = idx;
             response["user"] = "Carlo"
@@ -88,14 +88,14 @@ export default function ProfileScreen({ navigation }) {
   const getPuntosTotales = async () => {
     const donations = collection(db, "donations");
     const snapshot = await getDocs(query(donations, orderBy("total", "desc")))
-        let response = {place: -1, user: "Carlo", donations: 0}; 
+        let response = {place: -1, user: auth["currentUser"]["displayName"], donations: 0}; 
         let idx = 1;
         let json;
         
         snapshot.forEach((doc) => {
           
           json = doc.data()
-          if (json["user"] == "Carlo")
+          if (json["user"] == auth["currentUser"]["displayName"])
           {
             response["place"] = idx;
             response["user"] = "Carlo";
@@ -135,7 +135,7 @@ export default function ProfileScreen({ navigation }) {
       const donatePosition_ = await getDonatePosition();
       const numeroReferidos_ = await getNumeroReferidos();
       const puntosTotales_ = await getPuntosTotales();
-      
+
       setName(docSnap.data().name);
       setIsEnabled(docSnap.data().public);
     };
