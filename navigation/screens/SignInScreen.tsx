@@ -6,6 +6,7 @@ import { Button } from "react-native-elements";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import { render, fireEvent } from "@testing-library/react-native"
 
 export default function SignInScreen({ navigation }) {
   const [err, setErr] = React.useState(false);
@@ -52,6 +53,7 @@ export default function SignInScreen({ navigation }) {
         value={mailInputValue}
         containerStyle={{ width: 325, height: 55, marginBottom: 20 }}
         type="email-address"
+        testID="SignIn.emailInput"
       ></BanInput>
       <BanInput
         placeholder="Contraseña"
@@ -60,6 +62,7 @@ export default function SignInScreen({ navigation }) {
         containerStyle={{ width: 325, height: 55, marginBottom: 8 }}
         secureTextEntry={true}
         type="default"
+        testID="SignIn.passwordInput"
       ></BanInput>
 
       <Text
@@ -78,6 +81,7 @@ export default function SignInScreen({ navigation }) {
         buttonStyle={styles.button}
         onPress={handleSubmit}
         disabled={loading}
+        testID="SignIn.Button"
       ></Button>
 
       <View
