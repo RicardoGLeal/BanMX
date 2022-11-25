@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: palette.background,
     flex: 1,
+    paddingBottom:"30%",
   },
   textContainer: {
       marginBottom: 30
