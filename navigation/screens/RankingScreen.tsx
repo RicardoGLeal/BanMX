@@ -30,11 +30,17 @@ const You = ({item}) =>{
                   
                 </View> ) }
 
-const Item = ({ place, user, value }) => (
-  place !==3 ?(
+const Item = ({ place, user, value, isYourPosition }) => (
+  place !=3 ? 
+    isYourPosition? ((
+      <You item = {{place: place, donations:value}}/>))
+      
+        :
+  ((
   <View style = {styles.row_with_margin}>
           <StatProfile item = {{place: place, user: user, value:value}}/>
-        </View> ): (
+        </View> ) )
+        : (
   <View style = {styles.row_with_margin_and_line}>
           <StatProfile item = {{place: place, user: user, value:value}}/>
         </View> )
@@ -60,6 +66,14 @@ export default function RankingScreen({ navigation }) {
           idx ++;
           
         });
+        const yourPosition = await getYourPosition();
+        console.log("YP L : ", yourPosition.length);
+        
+        if (yourPosition.length > 0){
+          response.push(yourPosition[0]);
+        }
+        
+        console.log(response.length)
         setData(response)
     }
     const getYourPosition = async () => {
@@ -73,22 +87,26 @@ export default function RankingScreen({ navigation }) {
           json = doc.data()
           json["id"] = doc.id
           json["place"] = idx;
+          json["isYourPosition"] = true
           response.push(json);
           idx ++;
           
         });
-        setYourPosition(response)
+        return response;
+        // setYourPosition(response)
 
     }
 
     React.useEffect(() => {
         getData()
-        getYourPosition()
+        // getYourPosition()
     }, [])
    
-  const renderItem = ({ item }) => (
-    <Item place = {item.place} user = {item.user} value = {item.donations} />
-  );
+  const renderItem = ({ item }) => {
+   
+    return <Item place = {item.place} user = {item.user} value = {item.donations} isYourPosition = {item.isYourPosition!= undefined ? item.isYourPosition : false}/>
+    
+  }
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
@@ -108,23 +126,23 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         <View style = {styles.dashboard}><Dashboard item = {data != undefined ? data[0] : {}}/></View>
         
         <View style={styles.button_container_row}>
-          <TouchableOpacity style={styles.button_style_row_yellow}>
+          <TouchableOpacity style={styles.button_style_row_yellow} onPress = {getData}>
             <Text style={styles.button_text}>Donaciones</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button_style_row_gray}>
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>
         </View>
-    <ScrollView style = {styles.leaderboard}>
-        <FlatList
+    <View style = {styles.leaderboard}>
+        <FlatList style = {{marginBottom: 10}}
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id + item.place}
       />
 
         
-       <You item = {yourPosition != undefined ? yourPosition[0] : {}}/>
-       </ScrollView>
+       {/* <You item = {yourPosition != undefined ? yourPosition[0] : {}}/> */}
+       </View>
 
         <View style={styles.button_container} onTouchEnd={() =>
           navigation.navigate('Donate')
