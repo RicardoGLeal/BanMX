@@ -7,7 +7,7 @@ export default function InformacionIconButton({ screen }: {screen: string}){
     return (
         <TouchableOpacity onPress={() => navigation.navigate(screen)}> 
             <View>
-                <Image style={{width: 75, height:75}} source={require("../assets/logo-2-modified.png")} />
+                <Image style={{width: 75, height:50}} source={require("../assets/logo-2-modified.png")} />
             </View>
         </TouchableOpacity>
     );

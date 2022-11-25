@@ -40,12 +40,13 @@ export default function SignInScreen({ navigation }) {
         backgroundColor: palette.background,
       }}
     >
-      <Image
-        style={{ width: 300, height: 300 }}
-        source={require("../../assets/logo-2-modified.png")}
-      ></Image>
-
-      {err && <Text>Error</Text>}
+      <View style={{paddingBottom: 0}}>
+        <Image
+          style={{ width: 300, height: 200}}
+          source={require("../../assets/logo-2-modified.png")}
+        ></Image>
+      </View>
+      {err && <Text style={{paddingBottom: 10, color: palette.primaryRed}}>Error</Text>}
 
       <BanInput
         placeholder="Correo"
