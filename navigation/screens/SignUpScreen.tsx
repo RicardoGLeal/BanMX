@@ -20,6 +20,12 @@ export default function SignUpScreen({ navigation }) {
 
   const handleSubmit = async () => {
     setLoading(true);
+    if (nameInputValue != null && usenameInputValue != null && mailInputValue != null && passwordInputValue != null) {
+      setErr(true);
+      setErrText("Porfavor verifica los campos nuevamente");
+      return;
+    }
+
     try {
       const res = await createUserWithEmailAndPassword(
         auth,

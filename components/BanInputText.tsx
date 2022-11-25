@@ -16,9 +16,10 @@ export type banInputPropTypes = {
     onChange?: (value?: any) => any;
     value?: string;
     containerStyle?: MarginPaddingPropTypes;
+    testID? : string;
 };
 
-const BanInput = ({ type, secureTextEntry, placeholder, onChange, value, containerStyle }: banInputPropTypes) => {
+const BanInput = ({ type, secureTextEntry, placeholder, onChange, value, containerStyle, testID }: banInputPropTypes) => {
     if (onChange !== undefined && value === undefined) {
         console.warn(
             "Cannot set a callback change function without a value prop."
@@ -46,6 +47,8 @@ const BanInput = ({ type, secureTextEntry, placeholder, onChange, value, contain
                 placeholder={placeholder}
                 placeholderTextColor={palette.labelText}
                 keyboardType={type}
+                testID={testID}
+                // error={true}
             />
         </SafeAreaView>
     );
