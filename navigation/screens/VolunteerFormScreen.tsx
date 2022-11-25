@@ -19,7 +19,7 @@ export default function VolunteerFormScreen({ navigation }) {
 
   const sendEmailToBanmx = async () => {
     const email = "comunicacionbamx@bdalimentos.org";
-    const subject = "Quiero ser Aliado!";
+    const subject = "Quiero ser Voluntario!";
     const body = `Numero de contacto: ${number}\nMensaje:\n${mensaje}`;
     try {
       await sendEmail(email, subject, body);
@@ -71,7 +71,7 @@ export default function VolunteerFormScreen({ navigation }) {
         <View style={styles.button_container}>
           <TouchableOpacity
             style={styles.button_style}
-            onPress={() => sendEmailToBanmx}
+            onPress={() => sendEmailToBanmx()}
           >
             <Text style={styles.button_text}>Enviar</Text>
           </TouchableOpacity>
