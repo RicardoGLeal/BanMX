@@ -12,7 +12,7 @@ import {
   FlatList
 } from "react-native";
 import palette from "../../palette";
-import { query, orderBy, limit, collection, getDocs, where} from "firebase/firestore";  
+import { query, orderBy, limit, collection, getDocs, doc,  getDoc, where} from "firebase/firestore";  
 import {auth, db } from "../../firebase";
 import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
@@ -48,7 +48,7 @@ const Item = ({ place, user, value, isYourPosition }) => (
 export default function RankingScreen({ navigation }) {
 
   const [data, setData] = React.useState();
-  const [yourPosition, setYourPosition] = React.useState();
+  const [stats, setStats] = React.useState();
 
   const donations = collection(db, "donations");
 
@@ -76,6 +76,13 @@ export default function RankingScreen({ navigation }) {
         console.log(response.length)
         setData(response)
     }
+    
+    const getStats = async () => {
+      const stats = await getDoc(doc(donations, "stats"))
+      let response = stats.exists() ? stats.data().total : 0;
+      setStats(response)
+    
+  }
     const getYourPosition = async () => {
       const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"]), limit(1)))
         let response = []
@@ -99,6 +106,7 @@ export default function RankingScreen({ navigation }) {
 
     React.useEffect(() => {
         getData()
+        getStats()
         // getYourPosition()
     }, [])
    
@@ -120,7 +128,10 @@ export default function RankingScreen({ navigation }) {
         <Text style={styles.light_title_style}> Se parte de la ayuda! </Text>
         <Text style={styles.detailText}>{`Ayuda a BAMX con su mision de terminar con el 
 hambre en mexico. Dona y ve nuestro progreso!`}</Text>
-<Text style={styles.veryBigText}> </Text>
+<View style = {{marginBottom : 15}}>
+  <Text style={styles.veryBigText}> ${stats} </Text>
+  </View>
+
 <View style = {styles.textContainer}>
         </View> 
         <View style = {styles.dashboard}><Dashboard item = {data != undefined ? data[0] : {}}/></View>
@@ -185,7 +196,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: palette.background,
     flex: 1,
-    paddingBottom:"30%",
+    paddingBottom:"45%",
   },
   textContainer: {
       marginBottom: 30
