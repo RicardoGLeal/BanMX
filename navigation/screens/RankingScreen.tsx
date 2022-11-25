@@ -52,8 +52,8 @@ export default function RankingScreen({ navigation }) {
 
   const donations = collection(db, "donations");
 
-    const getData = async () => {
-        const snapshot = await getDocs(query(donations, orderBy("total", "desc"), limit(3)))
+    const getData = async (parameter) => {
+        const snapshot = await getDocs(query(donations, orderBy(parameter, "desc"), limit(3)))
         let response = []
         let idx = 1;
         let json;
@@ -62,11 +62,12 @@ export default function RankingScreen({ navigation }) {
           json = doc.data()
           json["id"] = doc.id
           json["place"] = idx;
+          json["value"] = doc.data()[parameter]
           response.push(json);
           idx ++;
           
         });
-        const yourPosition = await getYourPosition();
+        const yourPosition = await getYourPosition(parameter);
         console.log("YP L : ", yourPosition.length);
         
         if (yourPosition.length > 0){
@@ -83,7 +84,7 @@ export default function RankingScreen({ navigation }) {
       setStats(response)
     
   }
-    const getYourPosition = async () => {
+    const getYourPosition = async (parameter) => {
       const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"]), limit(1)))
         let response = []
         let idx = 1;
@@ -94,6 +95,7 @@ export default function RankingScreen({ navigation }) {
           json = doc.data()
           json["id"] = doc.id
           json["place"] = idx;
+          json["value"] = doc.data()[parameter]
           json["isYourPosition"] = true
           response.push(json);
           idx ++;
@@ -105,14 +107,14 @@ export default function RankingScreen({ navigation }) {
     }
 
     React.useEffect(() => {
-        getData()
+        getData("total")
         getStats()
         // getYourPosition()
     }, [])
    
   const renderItem = ({ item }) => {
    
-    return <Item place = {item.place} user = {item.user} value = {item.donations} isYourPosition = {item.isYourPosition!= undefined ? item.isYourPosition : false}/>
+    return <Item place = {item.place} user = {item.user} value = {item.value} isYourPosition = {item.isYourPosition!= undefined ? item.isYourPosition : false}/>
     
   }
   return (
@@ -137,10 +139,10 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         <View style = {styles.dashboard}><Dashboard item = {data != undefined ? data[0] : {}}/></View>
         
         <View style={styles.button_container_row}>
-          <TouchableOpacity style={styles.button_style_row_yellow} onPress = {getData}>
+          <TouchableOpacity style={styles.button_style_row_yellow} onPress = {()=>{getData("total")}}>
             <Text style={styles.button_text}>Donaciones</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button_style_row_gray}>
+          <TouchableOpacity style={styles.button_style_row_gray} onPress = {()=>{getData("referals")}}>
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>
         </View>
@@ -148,7 +150,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         <FlatList style = {{marginBottom: 10}}
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id + item.place}
+        keyExtractor={(item, index) => index + item.id + item.place}
       />
 
         
