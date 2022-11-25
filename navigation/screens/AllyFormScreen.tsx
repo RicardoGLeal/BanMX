@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import palette from "../../palette";
@@ -48,7 +49,9 @@ export default function AllyFormScreen({ navigation }) {
         />
 
         <Text style={styles.title}> Ser aliado </Text>
-
+        <ScrollView contentContainerStyle={{flexGrow: 1}}
+          keyboardShouldPersistTaps='handled'
+        >
         <TextInput
           style={styles.input_telefono}
           onChangeText={onChangeNumber}
@@ -83,6 +86,7 @@ export default function AllyFormScreen({ navigation }) {
             <Text style={styles.button_text}>Enviar</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </View>
     </View>
   );
