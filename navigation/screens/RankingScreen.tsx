@@ -20,10 +20,15 @@ import ProfileMap from "../../components/ProfileMap";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
 
-const You = ({item}) =>(
+const You = ({item}) =>{
+  return item != undefined ? (
   <View style = {styles.row_with_margin}>
           <StatProfile item = {{place: item.place, user: "Tú", value:item.donations}}/>
-        </View> )
+        </View> )  :
+        (
+          <View style = {styles.row_with_margin}>
+                  
+                </View> ) }
 
 const Item = ({ place, user, value }) => (
   place !==3 ?(
