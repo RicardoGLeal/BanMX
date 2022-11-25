@@ -111,26 +111,34 @@ export default function ProfileScreen({ navigation }) {
   }
 
   const toggleSwitch = async () => {
-    const docRef = doc(db, "users", currentUser.uid);
+    if (currentUser != undefined)
+    {
+      const docRef = doc(db, "users", currentUser.uid);
     setIsEnabled((previousState) => !previousState);
     await updateDoc(docRef, {
       public: !isEnabled,
     });
+    }
+    
   };
 
   const signOutAccount = () => {
     signOut(auth);
+    console.log("sign out")
     navigation.navigate("SignIn", {});
   };
 
   const getReferralLink = async () => {
+    if (currentUser != undefined){
     let baseUrl: string = "http://localhost:8080/descargar/referral/?id=";
     await Clipboard.setStringAsync(baseUrl.concat(currentUser.uid));
     console.log("Copied to clipboard!");
+    }
   };
 
   React.useEffect(() => {
     const fetchData = async () => {
+      if (currentUser != undefined){
       const docRef = doc(db, "users", currentUser.uid);
       const docSnap = await getDoc(docRef);
       const donatePosition_ = await getDonatePosition();
@@ -139,6 +147,7 @@ export default function ProfileScreen({ navigation }) {
 
       setName(docSnap.data().name);
       setIsEnabled(docSnap.data().public);
+      }
     };
 
     try {
@@ -163,7 +172,7 @@ export default function ProfileScreen({ navigation }) {
 
       <View style={styles.main_container}>
         <Text style={styles.title_style}> {name} </Text>
-        <Text> @{currentUser.displayName} </Text>
+        <Text> @{currentUser!= undefined? currentUser.displayName: "" } </Text>
         <View style={styles.switch_container}>
           <Text> Cuenta publica </Text>
           <Switch

@@ -13,19 +13,23 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
 import { db, auth } from "../../firebase";
-import { query, orderBy, limit, collection, getDocs, where, updateDoc} from "firebase/firestore";
+import { query, orderBy, limit, collection, getDocs, where, updateDoc, setDoc, doc} from "firebase/firestore";
 async function updateDonations(amount){
     const donations = collection(db, "donations");
         const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"])))
-        
-        snapshot.forEach(function(doc) {
-                console.log(doc.id, " => ", doc.data());
-                updateDoc(doc.ref, {donations:doc.data().donations + amount});
+        if (!snapshot.empty){
+        snapshot.forEach(function(document) {
+                console.log(document.id, " => ", document.data());
+                updateDoc(document.ref, {donations:document.data().donations + amount});
                 // ({foo: "bar"})
                 // await updateDoc(doc, {donations: 0})
                 
                 //not doc.update({foo: "bar"})
             });
+          }
+        else{
+            await setDoc(doc(donations), {user:auth["currentUser"]["displayName"], referals:0, donations: amount, total:amount})
+        }
 }
 async function donate(amount) {
   switch(amount) {
