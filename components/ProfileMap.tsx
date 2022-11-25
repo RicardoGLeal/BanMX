@@ -25,8 +25,8 @@ export default function ProfileMap() {
             latitude: 20.655886,
             longitude: -103.355201,
           }}
-          title="BANMX Guadalajara"
-          description="Oficinas BANMS Gdl"
+          title="BAMX Guadalajara"
+          description="Oficinas BAMX Gdl"
         />
       </MapView>
     </View>
