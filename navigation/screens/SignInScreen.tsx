@@ -41,8 +41,8 @@ export default function SignInScreen({ navigation }) {
       }}
     >
       <Image
-        style={{ width: 359, height: 400 }}
-        source={require("../../assets/banmx_logo.png")}
+        style={{ width: 300, height: 300 }}
+        source={require("../../assets/logo-2-modified.png")}
       ></Image>
 
       {err && <Text>Error</Text>}
