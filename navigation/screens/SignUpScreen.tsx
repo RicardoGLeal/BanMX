@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Alert } from "react-native";
 import palette from "../../palette";
 import BanInput from "../../components/BanInputText";
 import { Button } from "react-native-elements";
@@ -9,23 +9,31 @@ import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export default function SignUpScreen({ navigation }) {
-  const [err, setErr] = React.useState(false);
-  const [errText, setErrText] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
 
+  const [loading, setLoading] = React.useState(false);
   const [nameInputValue, setNameInputValue] = React.useState("");
   const [usenameInputValue, setUsernameInputValue] = React.useState("");
   const [mailInputValue, setMailInputValue] = React.useState("");
   const [passwordInputValue, setPasswordInputValue] = React.useState("");
 
+  function createAlertText () {
+    Alert.alert(
+      "Error",
+      "Por favor, verifica los campos nuevamente",
+      [
+        { text: "OK" }
+      ]
+    );
+  }
+
   const handleSubmit = async () => {
-    setLoading(true);
-    if (nameInputValue != null && usenameInputValue != null && mailInputValue != null && passwordInputValue != null) {
-      setErr(true);
-      setErrText("Porfavor verifica los campos nuevamente");
+    if (nameInputValue == "" || usenameInputValue == "" || mailInputValue == "" || passwordInputValue == "") {
+      createAlertText();
       return;
     }
 
+    setLoading(true);
+    
     try {
       const res = await createUserWithEmailAndPassword(
         auth,
@@ -52,9 +60,7 @@ export default function SignUpScreen({ navigation }) {
 
       navigation.navigate("Root", {});
     } catch (e) {
-      setErr(true);
-      console.log(e);
-      setErrText(e);
+      createAlertText();
       setLoading(false);
     }
   };
@@ -83,7 +89,6 @@ export default function SignUpScreen({ navigation }) {
         <Text style={styles.title}>Crear Cuenta</Text>
       </View>
 
-      {err && <Text>Error</Text>}
       {loading && <Text>Creando cuenta...</Text>}
 
       <BanInput
