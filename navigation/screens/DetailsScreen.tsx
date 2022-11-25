@@ -127,10 +127,11 @@ export default function DetailsScreen({ navigation }) {
             justifyContent: "center",
             alignContent: "center",
             alignItems: "center",
+            paddingBottom: 10
           }}
         >
           <Image
-            style={{ width:200, height: 200 }}
+            style={{ width:200, height: 150}}
             source={require("../../assets/logo-2-modified.png")}
           />
           <Text
