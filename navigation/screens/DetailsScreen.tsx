@@ -130,8 +130,8 @@ export default function DetailsScreen({ navigation }) {
           }}
         >
           <Image
-            style={{ width: 110, height: 160 }}
-            source={require("../../assets/component6.png")}
+            style={{ width:200, height: 200 }}
+            source={require("../../assets/logo-2-modified.png")}
           />
           <Text
             style={[
