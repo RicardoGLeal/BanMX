@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import palette from "../../palette";
@@ -47,16 +48,17 @@ export default function VolunteerFormScreen({ navigation }) {
         />
 
         <Text style={styles.title}> Ser voluntario </Text>
-
-        <TextInput
-          style={styles.input_telefono}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="telefono de contacto"
-          keyboardType="numeric"
-        />
-
-        <View>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}
+          keyboardShouldPersistTaps='handled'
+        >
+          <TextInput
+            style={styles.input_telefono}
+            onChangeText={onChangeNumber}
+            value={number}
+            placeholder="telefono de contacto"
+            keyboardType="numeric"
+          />
+          <View>
           <TextInput
             style={styles.input_mensaje}
             onChangeText={(text) => onChangeMensaje(text)}
@@ -66,7 +68,6 @@ export default function VolunteerFormScreen({ navigation }) {
             numberOfLines={5}
           />
         </View>
-
         <View style={styles.button_container}>
           <TouchableOpacity
             style={styles.button_style}
@@ -75,6 +76,7 @@ export default function VolunteerFormScreen({ navigation }) {
             <Text style={styles.button_text}>Enviar</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </View>
     </View>
   );
