@@ -12,7 +12,7 @@ import {
   FlatList
 } from "react-native";
 import palette from "../../palette";
-import { query, orderBy, limit, collection, getDocs, doc,  getDoc, where} from "firebase/firestore";  
+import { query, orderBy, limit, collection, getDocs, doc, setDoc,  getDoc, where} from "firebase/firestore";  
 import {auth, db } from "../../firebase";
 import StatProfile from "../../components/StatProfile";
 import Dashboard from "../../components/Dashboard";
@@ -38,11 +38,11 @@ const Item = ({ place, user, value, isYourPosition }) => (
         :
   ((
   <View style = {styles.row_with_margin}>
-          <StatProfile item = {{place: place, user: user, value:value}}/>
+          <StatProfile item = {{place: place, user: user != undefined? user : "Anónimo", value:value}}/>
         </View> ) )
         : (
   <View style = {styles.row_with_margin_and_line}>
-          <StatProfile item = {{place: place, user: user, value:value}}/>
+          <StatProfile item = {{place: place, user:user != undefined? user : "Anónimo", value:value}}/>
         </View> )
 );
 export default function RankingScreen({ navigation }) {
@@ -89,6 +89,7 @@ export default function RankingScreen({ navigation }) {
         let response = []
         let idx = 1;
         let json;
+        if (!snapshot.empty){
         snapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
@@ -101,6 +102,24 @@ export default function RankingScreen({ navigation }) {
           idx ++;
           
         });
+      }
+      else{
+        await setDoc(doc(donations), {user:auth["currentUser"]["displayName"], referals:0, donations: 0, total:0})
+        const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"]), limit(1)))
+        snapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          json = doc.data()
+          json["id"] = doc.id
+          json["place"] = idx;
+          json["value"] = doc.data()[parameter]
+          json["isYourPosition"] = true
+          response.push(json);
+          idx ++;
+      })
+    }
+
+
         return response;
         // setYourPosition(response)
 
