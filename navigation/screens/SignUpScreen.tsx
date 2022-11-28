@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, Alert, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import palette from "../../palette";
 import BanInput from "../../components/BanInputText";
 import { Button } from "react-native-elements";
@@ -66,6 +66,14 @@ export default function SignUpScreen({ navigation }) {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'
+    style={{backgroundColor: palette.background}}
+    >
     <View
       style={{
         flex: 1,
@@ -80,8 +88,8 @@ export default function SignUpScreen({ navigation }) {
         <Image
           style={{
             alignSelf: "flex-start",
-            width: 221,
-            height: 221,
+            width: 200,
+            height: 200,
             marginLeft: -220,
           }}
           source={require("../../assets/icon_signUp.png")}
@@ -90,7 +98,6 @@ export default function SignUpScreen({ navigation }) {
       </View>
 
       {loading && <Text>Creando cuenta...</Text>}
-
       <BanInput
         placeholder="Nombre Completo"
         onChange={setNameInputValue}
@@ -126,7 +133,6 @@ export default function SignUpScreen({ navigation }) {
         onPress={handleSubmit}
         disabled={loading}
       ></Button>
-
       <Text style={{ marginBottom: 20 }}>_____________ o _____________</Text>
       <Button
         titleStyle={{ color: palette.black }}
@@ -138,6 +144,8 @@ export default function SignUpScreen({ navigation }) {
         buttonStyle={styles.buttonFacebook}
       ></Button>
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
