@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import palette from "../../palette";
 import BanInput from "../../components/BanInputText";
 import { Button } from "react-native-elements";
@@ -32,80 +32,91 @@ export default function SignInScreen({ navigation }) {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: palette.background,
-      }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
-      <View style={{paddingBottom: 0}}>
-        <Image
-          style={{ width: 300, height: 200}}
-          source={require("../../assets/logo-2-modified.png")}
-        ></Image>
-      </View>
-      {err && <Text style={{paddingBottom: 10, color: palette.primaryRed}}>Error</Text>}
-
-      <BanInput
-        placeholder="Correo"
-        onChange={setMailInputValue}
-        value={mailInputValue}
-        containerStyle={{ width: 325, height: 55, marginBottom: 20 }}
-        type="email-address"
-        testID="SignIn.emailInput"
-      ></BanInput>
-      <BanInput
-        placeholder="Contraseña"
-        onChange={setPasswordInputValue}
-        value={passwordInputValue}
-        containerStyle={{ width: 325, height: 55, marginBottom: 8 }}
-        secureTextEntry={true}
-        type="default"
-        testID="SignIn.passwordInput"
-      ></BanInput>
-
-      <Text
-        style={{
-          textAlign: "right",
-          alignSelf: "flex-end",
-          marginBottom: 57,
-          marginRight: 52,
-        }}
+      <ScrollView contentContainerStyle={{flexGrow: 1}}
+      keyboardShouldPersistTaps='handled'
+      style={{backgroundColor: palette.background}}
       >
-        ¿Olvidaste tu Contraseña?
-      </Text>
-
-      <Button
-        title={"Iniciar Sesion"}
-        buttonStyle={styles.button}
-        onPress={handleSubmit}
-        disabled={loading}
-        testID="SignIn.Button"
-      ></Button>
-
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <Text>¿No tienes cuenta?</Text>
-        <Text
-          onPress={() => {
-            navigation.navigate("SignUp", {});
-          }}
+        <View
           style={{
-            marginLeft: 10,
-            fontWeight: "bold",
-            textDecorationLine: "underline",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: palette.background,
           }}
         >
-          Crear Cuenta
-        </Text>
-      </View>
-    </View>
+          <View style={{paddingBottom: 0}}>
+            <Image
+              style={{ width: 300, height: 200}}
+              source={require("../../assets/logo-2-modified.png")}
+            ></Image>
+          </View>
+          {err && <Text style={{paddingBottom: 10, color: palette.primaryRed}}>Error</Text>}
+
+          <BanInput
+            placeholder="Correo"
+            onChange={setMailInputValue}
+            value={mailInputValue}
+            containerStyle={{ width: 325, height: 55, marginBottom: 20 }}
+            type="email-address"
+            testID="SignIn.emailInput"
+          ></BanInput>
+          <BanInput
+            placeholder="Contraseña"
+            onChange={setPasswordInputValue}
+            value={passwordInputValue}
+            containerStyle={{ width: 325, height: 55, marginBottom: 8 }}
+            secureTextEntry={true}
+            type="default"
+            testID="SignIn.passwordInput"
+          ></BanInput>
+          <View style={{                
+                marginBottom: 57,
+                marginRight: 35,
+                alignSelf: "flex-end",
+          }}>
+            <Text
+              style={{
+                textAlign: "right",
+              }}
+            >
+              ¿Olvidaste tu Contraseña?
+            </Text>
+          </View>
+          <Button
+            title={"Iniciar Sesion"}
+            buttonStyle={styles.button}
+            onPress={handleSubmit}
+            disabled={loading}
+            testID="SignIn.Button"
+          ></Button>
+
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Text>¿No tienes cuenta?</Text>
+            <Text
+              onPress={() => {
+                navigation.navigate("SignUp", {});
+              }}
+              style={{
+                marginLeft: 10,
+                fontWeight: "bold",
+                textDecorationLine: "underline",
+              }}
+            >
+              Crear Cuenta
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
