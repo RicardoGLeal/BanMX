@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity, Image, StyleSheet  } from "react-native";
+import { View, Text, Image, StyleSheet  } from "react-native";
 import palette from "../palette";
 import React from "react";
 

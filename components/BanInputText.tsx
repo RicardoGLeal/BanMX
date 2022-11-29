@@ -1,7 +1,6 @@
 import React from "react";
 import {
     SafeAreaView,
-    StyleSheet,
     TextInput,
     KeyboardTypeOptions,
 } from "react-native";
@@ -20,7 +19,7 @@ export type banInputPropTypes = {
     autoCapitalize?: "none" | "sentences" | "words" | "characters"
 };
 
-const BanInput = ({ type, secureTextEntry, autoCapitalize, placeholder, onChange, value, containerStyle, testID }: banInputPropTypes) => {
+const BanInput = ({ type, secureTextEntry, autoCapitalize = "none", placeholder, onChange, value, containerStyle, testID }: banInputPropTypes) => {
     if (onChange !== undefined && value === undefined) {
         console.warn(
             "Cannot set a callback change function without a value prop."

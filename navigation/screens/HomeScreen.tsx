@@ -6,8 +6,7 @@ import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
-  Image,
-  TouchableOpacity,
+
 } from "react-native";
 import Item from "../../components/HomeScreenFeedItem";
 import { Item as ItemType } from "../../components/HomeScreenFeedItem";

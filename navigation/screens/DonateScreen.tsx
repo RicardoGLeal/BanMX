@@ -3,8 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
   TouchableOpacity,
   Linking,
 } from "react-native";
@@ -13,7 +11,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
 import { db, auth } from "../../firebase";
-import { query, orderBy, limit, collection, getDocs, where, updateDoc, setDoc, doc, getDoc} from "firebase/firestore";
+import { query, collection, getDocs, where, updateDoc, setDoc, doc, getDoc} from "firebase/firestore";
 async function updateDonations(amount){
     const donations = collection(db, "donations");
         const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"])))
@@ -21,10 +19,6 @@ async function updateDonations(amount){
         snapshot.forEach(function(document) {
                 console.log(document.id, " => ", document.data());
                 updateDoc(document.ref, {donations:document.data().donations + amount});
-                // ({foo: "bar"})
-                // await updateDoc(doc, {donations: 0})
-                
-                //not doc.update({foo: "bar"})
             });
           }
         else{

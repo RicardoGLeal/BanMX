@@ -6,7 +6,6 @@ import { Button } from "react-native-elements";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
-import { render, fireEvent } from "@testing-library/react-native"
 
 export default function SignInScreen({ navigation }) {
   const [err, setErr] = React.useState(false);

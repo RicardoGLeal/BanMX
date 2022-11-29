@@ -3,9 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
-  Button,
   Switch,
   TouchableOpacity,
 } from "react-native";
@@ -20,9 +18,7 @@ import { AuthContext } from "../../context/AuthContext";
 import InformacionIconButton from "../../components/InformacionIconButton";
 import {
   doc,
-  DocumentReference,
   getDoc,
-  setDoc,
   updateDoc,
 } from "firebase/firestore";
 
