@@ -12,15 +12,12 @@ import palette from "../../palette";
 import StatProfile from "../../components/StatProfile";
 import ProfileMap from "../../components/ProfileMap";
 import { signOut } from "firebase/auth";
-import { query, orderBy, collection, getDocs} from "firebase/firestore";  
+import { query, orderBy, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { AuthContext } from "../../context/AuthContext";
 import InformacionIconButton from "../../components/InformacionIconButton";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import Toast from "react-native-root-toast";
 
 export default function ProfileScreen({ navigation }) {
   console.log(auth);
@@ -34,115 +31,115 @@ export default function ProfileScreen({ navigation }) {
 
   const getDonatePosition = async () => {
     const donations = collection(db, "donations");
-    const snapshot = await getDocs(query(donations, orderBy("donations", "desc")))
-        let response = {place: -1, user: "Carlo", donations: 0}; 
-        let idx = 1;
-        let json;
-        
-        snapshot.forEach((doc) => {
-          
-          json = doc.data()
-          if (json["user"] == auth["currentUser"]["displayName"])
-          {
-            response["place"] = idx;
-            response["user"] = "Carlo"
-            response["donations"] = json["donations"]
-          }
-          
-          idx ++;
+    const snapshot = await getDocs(
+      query(donations, orderBy("donations", "desc"))
+    );
+    let response = { place: -1, user: "Carlo", donations: 0 };
+    let idx = 1;
+    let json;
 
-          
-        });
-        setDonatePosition(response);
-  }
+    snapshot.forEach((doc) => {
+      json = doc.data();
+      if (json["user"] == auth["currentUser"]["displayName"]) {
+        response["place"] = idx;
+        response["user"] = "Carlo";
+        response["donations"] = json["donations"];
+      }
 
-  
+      idx++;
+    });
+    setDonatePosition(response);
+  };
 
   const getNumeroReferidos = async () => {
     const donations = collection(db, "donations");
-    const snapshot = await getDocs(query(donations, orderBy("referals", "desc")))
-        let response = {place: -1, user: auth["currentUser"]["displayName"], referals: 0}; 
-        let idx = 1;
-        let json;
-        
-        snapshot.forEach((doc) => {
-          
-          json = doc.data()
-          if (json["user"] == auth["currentUser"]["displayName"])
-          {
-            response["place"] = idx;
-            response["user"] = "Carlo"
-            response["referals"] = json["referals"] != undefined ? json["referals"] : 0
-          }
-          
-          idx ++;
+    const snapshot = await getDocs(
+      query(donations, orderBy("referals", "desc"))
+    );
+    let response = {
+      place: -1,
+      user: auth["currentUser"]["displayName"],
+      referals: 0,
+    };
+    let idx = 1;
+    let json;
 
-          
-        });
-        setNumeroReferidos(response);
-  }
+    snapshot.forEach((doc) => {
+      json = doc.data();
+      if (json["user"] == auth["currentUser"]["displayName"]) {
+        response["place"] = idx;
+        response["user"] = "Carlo";
+        response["referals"] =
+          json["referals"] != undefined ? json["referals"] : 0;
+      }
+
+      idx++;
+    });
+    setNumeroReferidos(response);
+  };
 
   const getPuntosTotales = async () => {
     const donations = collection(db, "donations");
-    const snapshot = await getDocs(query(donations, orderBy("total", "desc")))
-        let response = {place: -1, user: auth["currentUser"]["displayName"], donations: 0}; 
-        let idx = 1;
-        let json;
-        
-        snapshot.forEach((doc) => {
-          
-          json = doc.data()
-          if (json["user"] == auth["currentUser"]["displayName"])
-          {
-            response["place"] = idx;
-            response["user"] = "Carlo";
-            response["total"] = json["total"];
-          }
-          
-          idx ++;
+    const snapshot = await getDocs(query(donations, orderBy("total", "desc")));
+    let response = {
+      place: -1,
+      user: auth["currentUser"]["displayName"],
+      donations: 0,
+    };
+    let idx = 1;
+    let json;
 
-          
-        });
-        setPuntosTotales(response);
-  }
+    snapshot.forEach((doc) => {
+      json = doc.data();
+      if (json["user"] == auth["currentUser"]["displayName"]) {
+        response["place"] = idx;
+        response["user"] = "Carlo";
+        response["total"] = json["total"];
+      }
+
+      idx++;
+    });
+    setPuntosTotales(response);
+  };
 
   const toggleSwitch = async () => {
-    if (currentUser != undefined)
-    {
+    if (currentUser != undefined) {
       const docRef = doc(db, "users", currentUser.uid);
-    setIsEnabled((previousState) => !previousState);
-    await updateDoc(docRef, {
-      public: !isEnabled,
-    });
+      setIsEnabled((previousState) => !previousState);
+      await updateDoc(docRef, {
+        public: !isEnabled,
+      });
     }
-    
   };
 
   const signOutAccount = () => {
     signOut(auth);
-    console.log("sign out")
+    console.log("sign out");
     navigation.navigate("SignIn", {});
   };
 
   const getReferralLink = async () => {
-    if (currentUser != undefined){
-    let baseUrl: string = "http://localhost:8080/descargar/referral/?id=";
-    await Clipboard.setStringAsync(baseUrl.concat(currentUser.uid));
-    console.log("Copied to clipboard!");
+    if (currentUser != undefined) {
+      let baseUrl: string = "http://localhost:8080/descargar/referral/?id=";
+      await Clipboard.setStringAsync(baseUrl.concat(currentUser.uid));
+      console.log("Copied to clipboard!");
+      let toast = Toast.show("Copeado al portapapeles", {
+        duration: Toast.durations.SHORT,
+      });
     }
   };
 
   React.useEffect(() => {
     const fetchData = async () => {
-      if (currentUser != undefined){
-      const docRef = doc(db, "users", currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      const donatePosition_ = await getDonatePosition();
-      const numeroReferidos_ = await getNumeroReferidos();
-      const puntosTotales_ = await getPuntosTotales();
+      if (currentUser != undefined) {
+        const docRef = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        const donatePosition_ = await getDonatePosition();
+        const numeroReferidos_ = await getNumeroReferidos();
+        const puntosTotales_ = await getPuntosTotales();
 
-      setName(docSnap.data().name);
-      setIsEnabled(docSnap.data().public);
+        setName(docSnap.data().name);
+        setIsEnabled(docSnap.data().public);
       }
     };
 
@@ -168,7 +165,10 @@ export default function ProfileScreen({ navigation }) {
 
       <View style={styles.main_container}>
         <Text style={styles.title_style}> {name} </Text>
-        <Text> @{currentUser!= undefined? currentUser.displayName: "" } </Text>
+        <Text>
+          {" "}
+          @{currentUser != undefined ? currentUser.displayName : ""}{" "}
+        </Text>
         <View style={styles.switch_container}>
           <Text> Cuenta publica </Text>
           <Switch
@@ -181,23 +181,35 @@ export default function ProfileScreen({ navigation }) {
 
         <View>
           <Text style={styles.section_title}> Donaciones directas </Text>
-          <StatProfile item={{ place: donatePosition["place"], 
-                               user: "Tu", 
-                               value: donatePosition["donations"]}} />
+          <StatProfile
+            item={{
+              place: donatePosition["place"],
+              user: "Tu",
+              value: donatePosition["donations"],
+            }}
+          />
         </View>
 
         <View>
           <Text style={styles.section_title}> Numero de referidos </Text>
-          <StatProfile item={{ place: numeroReferidos["place"], 
-                               user: "Tu", 
-                               value: numeroReferidos["referals"] }} />
+          <StatProfile
+            item={{
+              place: numeroReferidos["place"],
+              user: "Tu",
+              value: numeroReferidos["referals"],
+            }}
+          />
         </View>
 
         <View>
           <Text style={styles.section_title}> Puntos Totales </Text>
-          <StatProfile item={{ place: puntosTotales["place"], 
-                               user: "Tu", 
-                               value: puntosTotales["total"] }} />
+          <StatProfile
+            item={{
+              place: puntosTotales["place"],
+              user: "Tu",
+              value: puntosTotales["total"],
+            }}
+          />
         </View>
 
         <ProfileMap />
