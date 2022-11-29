@@ -139,28 +139,29 @@ export default function DetailsScreen({ navigation }) {
               styles.title1,
               {
                 marginBottom: "5%",
+                paddingHorizontal: 30,
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
               },
             ]}
           >
-            BAMX nace con un solo objetivo. LLevar comida a las familias y
-            personas que lo necesitan
+            BAMX nace con el objetivo de llevar comida a las familias y
+            personas que lo necesitan.
           </Text>
           <Text
             style={{
-              fontSize: 13,
-              fontWeight: "bold",
+              fontSize: 17,
+              fontWeight: "normal",
               marginBottom: 10,
               textAlign: "center",
               justifyContent: "center",
               alignContent: "center",
               alignItems: "center",
-              paddingHorizontal: 15,
+              paddingHorizontal: 30,
             }}
           >
-            BAMX Agradece infinitamente a las siguientes empresas por su alianza
+            Agradecemos infinitamente a las siguientes empresas por su alianza
             y apoyo directo
           </Text>
         </View>
@@ -247,8 +248,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title1: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 19,
+    fontWeight: "normal",
     color: "#000000",
     textAlign: "center",
   },
