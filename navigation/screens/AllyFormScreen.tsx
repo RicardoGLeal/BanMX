@@ -63,7 +63,8 @@ export default function AllyFormScreen({ navigation }) {
               style={styles.input_telefono}
               onChangeText={onChangeNumber}
               value={number}
-              placeholder="telefono de contacto"
+              placeholder="Teléfono de Contacto"
+              placeholderTextColor={palette.black}
               keyboardType="numeric"
             />
 
@@ -72,6 +73,7 @@ export default function AllyFormScreen({ navigation }) {
               onChangeText={onChangeEmpresa}
               value={empresa}
               placeholder="Empresa"
+              placeholderTextColor={palette.black}
             />
 
             <View>
@@ -80,6 +82,7 @@ export default function AllyFormScreen({ navigation }) {
                 onChangeText={(text) => onChangeMensaje(text)}
                 value={mensaje}
                 placeholder="Mensaje"
+                placeholderTextColor={palette.black}
                 multiline
                 numberOfLines={5}
               />

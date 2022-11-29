@@ -61,7 +61,8 @@ export default function VolunteerFormScreen({ navigation }) {
                 style={styles.input_telefono}
                 onChangeText={onChangeNumber}
                 value={number}
-                placeholder="telefono de contacto"
+                placeholder="Teléfono de Contacto"
+                placeholderTextColor={palette.black}
                 keyboardType="numeric"
               />
               <View>
@@ -70,6 +71,7 @@ export default function VolunteerFormScreen({ navigation }) {
                 onChangeText={(text) => onChangeMensaje(text)}
                 value={mensaje}
                 placeholder="Mensaje"
+                placeholderTextColor={palette.black}
                 multiline
                 numberOfLines={5}
               />

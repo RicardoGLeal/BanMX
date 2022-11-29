@@ -58,6 +58,7 @@ export default function SignInScreen({ navigation }) {
 
           <BanInput
             placeholder="Correo"
+            autoCapitalize="none"
             onChange={setMailInputValue}
             value={mailInputValue}
             containerStyle={{ width: 325, height: 55, marginBottom: 20 }}

@@ -100,6 +100,7 @@ export default function SignUpScreen({ navigation }) {
           {loading && <Text>Creando cuenta...</Text>}
           <BanInput
             placeholder="Nombre Completo"
+            autoCapitalize="words"
             onChange={setNameInputValue}
             value={nameInputValue}
             containerStyle={{ width: 325, height: 55, marginBottom: 15 }}
@@ -107,6 +108,7 @@ export default function SignUpScreen({ navigation }) {
           ></BanInput>
           <BanInput
             placeholder="Usuario"
+            autoCapitalize="none"
             onChange={setUsernameInputValue}
             value={usenameInputValue}
             containerStyle={{ width: 325, height: 55, marginBottom: 15 }}
@@ -114,6 +116,7 @@ export default function SignUpScreen({ navigation }) {
           ></BanInput>
           <BanInput
             placeholder="Correo"
+            autoCapitalize="none"
             onChange={setMailInputValue}
             value={mailInputValue}
             containerStyle={{ width: 325, height: 55, marginBottom: 15 }}
