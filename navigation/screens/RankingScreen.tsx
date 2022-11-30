@@ -70,6 +70,7 @@ const Item = ({ place, user, value, isYourPosition }) =>
 export default function RankingScreen({ navigation }) {
   const [data, setData] = React.useState();
   const [stats, setStats] = React.useState();
+  const [buttonPressed, setButtonPressed] = React.useState<number>(0)
 
   const donations = collection(db, "donations");
 
@@ -162,6 +163,7 @@ export default function RankingScreen({ navigation }) {
 
   React.useEffect(() => {
     getData("donations");
+    setButtonPressed(0);
     getStats();
     // getYourPosition()
   }, []);
@@ -200,21 +202,22 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         <View style={styles.dashboard}>
           <Dashboard item={data != undefined ? data[0] : {}} />
         </View>
-
         <View style={styles.button_container_row}>
           <TouchableOpacity
-            style={styles.button_style_row_yellow}
-            onPress={() => {
-              getData("donations");
-            }}
+            style={buttonPressed == 0 ? styles.button_style_row_yellow : styles.button_style_row_gray}
+            onPress={() => {[
+              getData("donations"),
+              setButtonPressed(0)
+            ]}}
           >
             <Text style={styles.button_text}>Donaciones</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button_style_row_gray}
-            onPress={() => {
-              getData("referals");
-            }}
+            style={buttonPressed == 1 ? styles.button_style_row_yellow : styles.button_style_row_gray}
+            onPress={() => {[
+              getData("referals"),
+              setButtonPressed(1)
+            ]}}
           >
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>
