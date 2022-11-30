@@ -123,7 +123,7 @@ export default function ProfileScreen({ navigation }) {
       let baseUrl: string = "http://localhost:8080/descargar/referral/?id=";
       await Clipboard.setStringAsync(baseUrl.concat(currentUser.uid));
       console.log("Copied to clipboard!");
-      let toast = Toast.show("Copeado al portapapeles", {
+      let toast = Toast.show("Copiado al portapapeles", {
         duration: Toast.durations.SHORT,
       });
     }
