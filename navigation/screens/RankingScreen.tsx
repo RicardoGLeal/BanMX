@@ -70,13 +70,13 @@ const Item = ({ place, user, value, isYourPosition }) =>
 export default function RankingScreen({ navigation }) {
   const [data, setData] = React.useState();
   const [stats, setStats] = React.useState();
-  const [buttonPressed, setButtonPressed] = React.useState<number>(0)
+  const [buttonPressed, setButtonPressed] = React.useState<number>(0);
 
   const donations = collection(db, "donations");
 
   const getData = async (parameter) => {
     const snapshot = await getDocs(
-      query(donations, orderBy(parameter, "desc"), limit(3))
+      query(donations, orderBy(parameter, "desc"))
     );
     let response = [];
     let idx = 1;
@@ -87,15 +87,20 @@ export default function RankingScreen({ navigation }) {
       json["id"] = doc.id;
       json["place"] = idx;
       json["value"] = doc.data()[parameter];
-      response.push(json);
+      console.log(doc.data()["user"]);
+      console.log(auth["currentUser"]["displayName"]);
+      if (idx <= 3) {
+        response.push(json);
+      }
       idx++;
     });
-    const yourPosition = await getYourPosition(parameter);
-    console.log("YP L : ", yourPosition.length);
+    //const yourPosition = await getYourPosition(parameter);
+    /*console.log("YP L : ", yourPosition.length);
 
     if (yourPosition.length > 0) {
       response.push(yourPosition[0]);
     }
+    */
 
     console.log(response.length);
     setData(response);
@@ -204,20 +209,26 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
         </View>
         <View style={styles.button_container_row}>
           <TouchableOpacity
-            style={buttonPressed == 0 ? styles.button_style_row_yellow : styles.button_style_row_gray}
-            onPress={() => {[
-              getData("donations"),
-              setButtonPressed(0)
-            ]}}
+            style={
+              buttonPressed == 0
+                ? styles.button_style_row_yellow
+                : styles.button_style_row_gray
+            }
+            onPress={() => {
+              [getData("donations"), setButtonPressed(0)];
+            }}
           >
             <Text style={styles.button_text}>Donaciones</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={buttonPressed == 1 ? styles.button_style_row_yellow : styles.button_style_row_gray}
-            onPress={() => {[
-              getData("referals"),
-              setButtonPressed(1)
-            ]}}
+            style={
+              buttonPressed == 1
+                ? styles.button_style_row_yellow
+                : styles.button_style_row_gray
+            }
+            onPress={() => {
+              [getData("referals"), setButtonPressed(1)];
+            }}
           >
             <Text style={styles.button_text}>Referidos</Text>
           </TouchableOpacity>

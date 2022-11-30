@@ -42,7 +42,7 @@ export default function ProfileScreen({ navigation }) {
       json = doc.data();
       if (json["user"] == auth["currentUser"]["displayName"]) {
         response["place"] = idx;
-        response["user"] = "Carlo";
+        response["user"] = "Tu";
         response["donations"] = json["donations"];
       }
 
@@ -68,7 +68,7 @@ export default function ProfileScreen({ navigation }) {
       json = doc.data();
       if (json["user"] == auth["currentUser"]["displayName"]) {
         response["place"] = idx;
-        response["user"] = "Carlo";
+        response["user"] = "Tu";
         response["referals"] =
           json["referals"] != undefined ? json["referals"] : 0;
       }
@@ -93,7 +93,7 @@ export default function ProfileScreen({ navigation }) {
       json = doc.data();
       if (json["user"] == auth["currentUser"]["displayName"]) {
         response["place"] = idx;
-        response["user"] = "Carlo";
+        response["user"] = "Tu";
         response["total"] = json["total"];
       }
 
