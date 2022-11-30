@@ -11,52 +11,77 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import InformacionIconButton from "../../components/InformacionIconButton";
 
 import { db, auth } from "../../firebase";
-import { query, collection, getDocs, where, updateDoc, setDoc, doc, getDoc} from "firebase/firestore";
-async function updateDonations(amount){
-    const donations = collection(db, "donations");
-        const snapshot = await getDocs(query(donations, where("user", "==", auth["currentUser"]["displayName"])))
-        if (!snapshot.empty){
-        snapshot.forEach(function(document) {
-                console.log(document.id, " => ", document.data());
-                updateDoc(document.ref, {donations:document.data().donations + amount});
-            });
-          }
-        else{
-            await setDoc(doc(donations), {user:auth["currentUser"]["displayName"], referals:0, donations: amount, total:amount})
-        }
-        const stats = await getDoc(doc(donations, "stats"))
-        if (stats.exists())
-        {
-          setDoc(doc(donations, "stats"), {total: stats.data().total + amount})
-        }
-
+import {
+  query,
+  collection,
+  getDocs,
+  where,
+  updateDoc,
+  setDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+async function updateDonations(amount) {
+  const donations = collection(db, "donations");
+  const snapshot = await getDocs(
+    query(donations, where("user", "==", auth["currentUser"]["displayName"]))
+  );
+  if (!snapshot.empty) {
+    snapshot.forEach(function (document) {
+      console.log(document.id, " => ", document.data());
+      updateDoc(document.ref, {
+        donations: document.data().donations + amount,
+        total: document.data().total + amount,
+      });
+    });
+  } else {
+    await setDoc(doc(donations), {
+      user: auth["currentUser"]["displayName"],
+      referals: 0,
+      donations: amount,
+      total: amount,
+    });
+  }
+  const stats = await getDoc(doc(donations, "stats"));
+  if (stats.exists()) {
+    setDoc(doc(donations, "stats"), { total: stats.data().total + amount });
+  }
 }
 async function donate(amount) {
-  switch(amount) {
+  switch (amount) {
     case 200:
-   
       await updateDonations(amount);
-      await Linking.openURL("https://pay.conekta.com/link/74659d73d8af4c419e8e27dd19468e08"); 
+      await Linking.openURL(
+        "https://pay.conekta.com/link/74659d73d8af4c419e8e27dd19468e08"
+      );
       break;
-      
+
     case 400:
-        await updateDonations(amount);
-      await Linking.openURL("https://pay.conekta.com/link/c503fdcc6bb74a3c991907aea583e60e"); 
+      await updateDonations(amount);
+      await Linking.openURL(
+        "https://pay.conekta.com/link/c503fdcc6bb74a3c991907aea583e60e"
+      );
       break;
 
     case 800:
-        await updateDonations(amount);
-      await Linking.openURL("https://pay.conekta.com/link/d22fc96686104e30a3351dc5eeb29d1a");
+      await updateDonations(amount);
+      await Linking.openURL(
+        "https://pay.conekta.com/link/d22fc96686104e30a3351dc5eeb29d1a"
+      );
       break;
 
     case 1200:
-        await updateDonations(amount);
-      await Linking.openURL("https://pay.conekta.com/link/48d0dc0733494452a134c5a77b184784");
+      await updateDonations(amount);
+      await Linking.openURL(
+        "https://pay.conekta.com/link/48d0dc0733494452a134c5a77b184784"
+      );
       break;
 
     case 1600:
-        await updateDonations(amount);
-      await Linking.openURL("https://pay.conekta.com/link/1192db4e88f74f3ca57f080b6bf0fa40");
+      await updateDonations(amount);
+      await Linking.openURL(
+        "https://pay.conekta.com/link/1192db4e88f74f3ca57f080b6bf0fa40"
+      );
       break;
   }
 }
@@ -69,32 +94,57 @@ export default function DonateScreen({ navigation }) {
           <InformacionIconButton screen={"Details"} />
         </View>
         <View style={styles.back}>
-          <Ionicons name={"chevron-back-outline"} size={32} color={"#000000"} onPress={() => navigation.goBack()} />
+          <Ionicons
+            name={"chevron-back-outline"}
+            size={32}
+            color={"#000000"}
+            onPress={() => navigation.goBack()}
+          />
         </View>
       </View>
 
       <View style={styles.main_container}>
-        <Text style={styles.light_title_style}> Muchas gracias por tu motivación por apoyar!  </Text>
-        <Text style={styles.detailText}>Por favor, selecciona la cantidad de dinero que te gustaría donar. Recuerda que por cada $160 se estarás donando 1 despensa a una familia</Text>
+        <Text style={styles.light_title_style}>
+          {" "}
+          Muchas gracias por tu motivación por apoyar!{" "}
+        </Text>
+        <Text style={styles.detailText}>
+          Por favor, selecciona la cantidad de dinero que te gustaría donar.
+          Recuerda que por cada $160 se estarás donando 1 despensa a una familia
+        </Text>
       </View>
 
       <View style={styles.button_container}>
-        <TouchableOpacity style={styles.button_style} onPress={() => donate(200)}>
+        <TouchableOpacity
+          style={styles.button_style}
+          onPress={() => donate(200)}
+        >
           <Text style={styles.button_text}>200$</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button_style} onPress={() => donate(400)}>
+        <TouchableOpacity
+          style={styles.button_style}
+          onPress={() => donate(400)}
+        >
           <Text style={styles.button_text}>400$</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button_style} onPress={() => donate(800)}>
+        <TouchableOpacity
+          style={styles.button_style}
+          onPress={() => donate(800)}
+        >
           <Text style={styles.button_text}>800$</Text>
         </TouchableOpacity>
-
       </View>
       <View style={styles.button_container}>
-        <TouchableOpacity style={styles.button_style} onPress={() => donate(1200)}>
+        <TouchableOpacity
+          style={styles.button_style}
+          onPress={() => donate(1200)}
+        >
           <Text style={styles.button_text}>1200$</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button_style} onPress={() => donate(1600)}>
+        <TouchableOpacity
+          style={styles.button_style}
+          onPress={() => donate(1600)}
+        >
           <Text style={styles.button_text}>1600$</Text>
         </TouchableOpacity>
       </View>
@@ -124,8 +174,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   image: {
-    flex: '1',
-    width: undefined, height: undefined
+    flex: "1",
+    width: undefined,
+    height: undefined,
   },
   back: {
     flex: 1,
@@ -135,23 +186,23 @@ const styles = StyleSheet.create({
   veryBigText: {
     fontSize: 36,
     color: "#FBC714",
-    fontWeight: "900"
+    fontWeight: "900",
   },
   row_with_margin: {
-    marginBottom: 6
+    marginBottom: 6,
   },
   row_with_margin_and_line: {
     paddingBottom: 10,
     borderBottomColor: "#3A3A3A",
     borderBottomWidth: 2,
-    marginBottom: 12
+    marginBottom: 12,
   },
   container: {
     backgroundColor: palette.background,
     flex: 1,
   },
   textContainer: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   top_container: {
     display: "flex",
@@ -188,7 +239,7 @@ const styles = StyleSheet.create({
   },
   detailText: {
     paddingHorizontal: 36,
-    textAlign: 'justify',
+    textAlign: "justify",
     fontSize: 16,
     color: palette.textColor,
     marginBottom: 20,
@@ -261,7 +312,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     borderRadius: 10,
     marginHorizontal: 10,
-    // flex: 1, 
+    // flex: 1,
     width: 100,
   },
   button_style_big: {
@@ -273,9 +324,8 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     borderRadius: 10,
     marginHorizontal: 10,
-    // flex: 1, 
+    // flex: 1,
     width: 180,
-
   },
   button_style_yellow: {
     display: "flex",
@@ -283,8 +333,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 300,
     height: 60,
-
-
   },
   button_text: {
     color: "#FFFFFF",
@@ -294,8 +342,8 @@ const styles = StyleSheet.create({
   button_container: {
     display: "flex",
     flexDirection: "row",
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: "center",
+    justifyContent: "center",
     paddingHorizontal: 10,
     marginHorizontal: 10,
     marginTop: 10,
@@ -303,8 +351,8 @@ const styles = StyleSheet.create({
   button_container_margin: {
     display: "flex",
     flexDirection: "row",
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: "center",
+    justifyContent: "center",
     paddingHorizontal: 10,
     marginHorizontal: 10,
     marginTop: 100,
@@ -312,8 +360,8 @@ const styles = StyleSheet.create({
   cantidad_a_donar: {
     display: "flex",
     flexDirection: "row",
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: "center",
+    justifyContent: "center",
     paddingHorizontal: 10,
     marginHorizontal: 10,
     marginTop: 60,
