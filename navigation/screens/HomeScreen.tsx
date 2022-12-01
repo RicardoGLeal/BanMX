@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
+  ActivityIndicator,
 
 } from "react-native";
 import Item from "../../components/HomeScreenFeedItem";
@@ -52,6 +53,7 @@ export default function HomeScreen({ navigation }) {
 
   const [data, setData] = useState<[News?]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingFeed, setLoadingFeed] = useState(false);
   const { currentUser } = React.useContext(AuthContext);
   const [name, setName] = React.useState("");
   
@@ -74,6 +76,7 @@ export default function HomeScreen({ navigation }) {
     const data = await myAsyncFunction();
     setData(data);
     setLoading(false)
+    setLoadingFeed(false)
   }
 
   const fetchUser = async () => {
@@ -108,6 +111,7 @@ export default function HomeScreen({ navigation }) {
         >
           <Text style={styles.title}>Loading...</Text>
         </View>
+        <ActivityIndicator size="large"/>
       </SafeAreaView>
     );
   } else {
@@ -123,7 +127,7 @@ export default function HomeScreen({ navigation }) {
             paddingRight: "10%",
           }}
         >
-          <Text style={styles.title}>Hola{name ?  ", " + name : "loading.."} </Text>
+          <Text style={styles.title}>Hola{name ?  ", " + name : ""} </Text>
           <InformacionIconButton screen={"Details"} />
         </View>
         <View style={styles.storiesContainer}>
@@ -142,24 +146,9 @@ export default function HomeScreen({ navigation }) {
               Esto es lo que ha estado haciendo BAMX:
             </Text>
           </View>
-          {data.length > 0 ?           
-            <FlatList
-            refreshing={loading}
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item) => String(item.id)}
-              onRefresh={() => {
-                setLoading(true);
-                try{
-                  fetchData()
-                } catch (error) {
-                console.log(error)
-                setLoading(false)
-                }
-              }}
-            /> 
-          : <Text style={{
-              fontSize: 32,
+          {!loading && !loadingFeed ?           
+            data.length <= 0 ? <Text style={{
+              fontSize: 28,
               fontWeight: "bold",
               justifyContent: "center",
               textAlign: "center",
@@ -168,7 +157,23 @@ export default function HomeScreen({ navigation }) {
             }}
             >
               No hay noticias para mostrar aún, esperalas pronto!
-            </Text> } 
+            </Text> :
+            <FlatList
+            refreshing={loadingFeed}
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item) => String(item.id)}
+              onRefresh={() => {
+                setLoadingFeed(true);
+                try{
+                  fetchData()
+                } catch (error) {
+                  console.log(error)
+                  setLoadingFeed(false)
+                }
+              }}
+            /> 
+          : <ActivityIndicator size="large"/> }
         </View>
       </SafeAreaView>
     );
