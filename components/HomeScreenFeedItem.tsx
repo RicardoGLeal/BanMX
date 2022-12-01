@@ -24,7 +24,7 @@ export default function Item(item: Item){
                         <Text numberOfLines={pressed ? 20 : 5} ellipsizeMode={"tail"} style={styles.bodyText}>{item.text}</Text>
                     </View>
                 </View>
-                <View style={{height: 20, justifyContent: 'center', alignContent: 'center', alignSelf: 'center', paddingTop: 10, marginBottom:5}}>
+                <View style={{height: 30, justifyContent: 'center', alignContent: 'center', alignSelf: 'center', paddingTop: 10, marginBottom:5}}>
                     <Image style={{width: 20, height: "90%", transform: [{ rotate: pressed ? '90deg' : '-90deg' }]}} source={require('../assets/chevron_left2.png')}/>
                 </View>
             </View>
