@@ -70,18 +70,20 @@ export default function HomeScreen({ navigation }) {
     <Item id={item.id} title={item.title} text={item.text} uri={item.uri} />
   );
 
+  const fetchData = async() => {
+    const data = await myAsyncFunction();
+    setData(data);
+    setLoading(false)
+  }
+
+  const fetchUser = async () => {
+    const docRef = doc(db, "users", currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    setName(docSnap.data().username);
+  };
+
   useEffect(() => {
     setLoading(true);
-    const fetchData = async() => {
-      const data = await myAsyncFunction();
-      setData(data);
-      setLoading(false)
-    }
-    const fetchUser = async () => {
-      const docRef = doc(db, "users", currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      setName(docSnap.data().username);
-    };
     try{
       fetchUser()
       fetchData()
@@ -142,9 +144,11 @@ export default function HomeScreen({ navigation }) {
           </View>
           {data.length > 0 ?           
             <FlatList
+            refreshing={loading}
               data={data}
               renderItem={renderItem}
               keyExtractor={(item) => String(item.id)}
+              onRefresh={() => fetchData()}
             /> 
           : <Text style={{
               fontSize: 32,
