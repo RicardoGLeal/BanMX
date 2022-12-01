@@ -81,19 +81,55 @@ export default function RankingScreen({ navigation }) {
     let response = [];
     let idx = 1;
     let json;
+    let yourPosition;
     snapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
       json = doc.data();
       json["id"] = doc.id;
       json["place"] = idx;
       json["value"] = doc.data()[parameter];
-      console.log(doc.data()["user"]);
-      console.log(auth["currentUser"]["displayName"]);
+      console.log(doc.data()["user"] ==auth["currentUser"]["displayName"]);
+      // console.log(auth["currentUser"]["displayName"]);
       if (idx <= 3) {
         response.push(json);
       }
+      if (doc.data()["user"] == auth["currentUser"]["displayName"] )
+      {
+        yourPosition = json;
+      }
       idx++;
     });
+    if (yourPosition != undefined || yourPosition != null)
+    {
+      yourPosition["user"] = "Tu"
+      response.push(yourPosition);
+    }
+    else {
+      await setDoc(doc(donations), {
+        user: auth["currentUser"]["displayName"],
+        referals: 0,
+        donations: 0,
+        total: 0,
+      });
+      const snapshot = await getDocs(
+        query(
+          donations,
+          where("user", "==", auth["currentUser"]["displayName"]),
+          limit(1)
+        )
+      );
+      snapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        json = doc.data();
+        json["id"] = doc.id;
+        json["place"] = idx;
+        json["value"] = doc.data()[parameter];
+        json["isYourPosition"] = true;
+        response.push(json);
+      });
+      // response.push(yourPosition);
+    }
     //const yourPosition = await getYourPosition(parameter);
     /*console.log("YP L : ", yourPosition.length);
 
