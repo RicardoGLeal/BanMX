@@ -148,7 +148,15 @@ export default function HomeScreen({ navigation }) {
               data={data}
               renderItem={renderItem}
               keyExtractor={(item) => String(item.id)}
-              onRefresh={() => fetchData()}
+              onRefresh={() => {
+                setLoading(true);
+                try{
+                  fetchData()
+                } catch (error) {
+                console.log(error)
+                setLoading(false)
+                }
+              }}
             /> 
           : <Text style={{
               fontSize: 32,
