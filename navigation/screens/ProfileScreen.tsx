@@ -128,20 +128,20 @@ export default function ProfileScreen({ navigation }) {
       });
     }
   };
+  const fetchData = async () => {
+    if (currentUser != undefined) {
+      const docRef = doc(db, "users", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+      const donatePosition_ = await getDonatePosition();
+      const numeroReferidos_ = await getNumeroReferidos();
+      const puntosTotales_ = await getPuntosTotales();
 
+      setName(docSnap.data().name);
+      setIsEnabled(docSnap.data().public);
+    }
+  };
   React.useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser != undefined) {
-        const docRef = doc(db, "users", currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        const donatePosition_ = await getDonatePosition();
-        const numeroReferidos_ = await getNumeroReferidos();
-        const puntosTotales_ = await getPuntosTotales();
-
-        setName(docSnap.data().name);
-        setIsEnabled(docSnap.data().public);
-      }
-    };
+    
 
     try {
       fetchData();
@@ -179,7 +179,7 @@ export default function ProfileScreen({ navigation }) {
           />
         </View>
 
-        <View>
+        <View onTouchStart={fetchData}>
           <Text style={styles.section_title}> Donaciones directas </Text>
           <StatProfile
             item={{
@@ -190,7 +190,7 @@ export default function ProfileScreen({ navigation }) {
           />
         </View>
 
-        <View>
+        <View onTouchStart={fetchData}>
           <Text style={styles.section_title}> Numero de referidos </Text>
           <StatProfile
             item={{
@@ -201,7 +201,7 @@ export default function ProfileScreen({ navigation }) {
           />
         </View>
 
-        <View>
+        <View onTouchStart={fetchData}>
           <Text style={styles.section_title}> Puntos Totales </Text>
           <StatProfile
             item={{

@@ -42,9 +42,10 @@ async function updateDonations(amount) {
       total: amount,
     });
   }
-  const stats = await getDoc(doc(donations, "stats"));
+  const Stats = collection(db, "Stats")
+  const stats = await getDoc(doc(Stats, "stats"));
   if (stats.exists()) {
-    setDoc(doc(donations, "stats"), { total: stats.data().total + amount });
+    setDoc(doc(Stats, "stats"), { total: stats.data().total + amount });
   }
 }
 async function donate(amount) {

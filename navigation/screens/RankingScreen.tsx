@@ -251,7 +251,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
                 : styles.button_style_row_gray
             }
             onPress={() => {
-              [getData("donations"), setButtonPressed(0)];
+              [getData("donations"), setButtonPressed(0), getStats()];
             }}
           >
             <Text style={styles.button_text}>Donaciones</Text>
@@ -263,7 +263,7 @@ hambre en mexico. Dona y ve nuestro progreso!`}</Text>
                 : styles.button_style_row_gray
             }
             onPress={() => {
-              [getData("referals"), setButtonPressed(1)];
+              [getData("referals"), setButtonPressed(1), getStats()];
             }}
           >
             <Text style={styles.button_text}>Referidos</Text>
